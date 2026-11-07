@@ -1,0 +1,42 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+      - name: Lint
+        run: ruff check .
+      - name: Tests (synthetic data only, no downloads)
+        run: pytest -q
+      - name: Dataset tables are up to date
+        run: python scripts/make_dataset_table.py --check
+      - name: Notebooks only use datasets the registry allows
+        run: python scripts/check_notebooks_registry.py
+
+  hygiene:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: No images, archives, model files or private data are tracked
+        run: |
+          bad=$(git ls-files | grep -E '\.(png|jpe?g|gif|bmp|zip|tar|gz|pt|pth|onnx|task|h5|ckpt|safetensors)$|^data/private/[^R]|^data/raw/' || true)
+          if [ -n "$bad" ]; then echo "Tracked files that must not be in git:"; echo "$bad"; exit 1; fi
+      - name: No large files
+        run: |
+          big=$(git ls-files -z | xargs -0 du -k | awk '$1 > 1024 {print $2}')
+          if [ -n "$big" ]; then echo "Files over 1 MB:"; echo "$big"; exit 1; fi
