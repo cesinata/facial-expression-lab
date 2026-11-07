@@ -1,0 +1,162 @@
+# Single source of truth for dataset information.
+# README.md and docs/data.md tables are generated from this file:
+#   python scripts/make_dataset_table.py
+#
+# Fields
+#   name            registry key used in code (fel.data.download("<name>"))
+#   title           display name
+#   what            one-line description (checked against the provider page where noted)
+#   access          how to get it and what the terms say
+#   licence         licence text as read on the provider page, or "unconfirmed"
+#   licence_status  confirmed | partly_confirmed | unconfirmed
+#   source_url      official page, or null if not yet checked
+#   public          true if anyone may obtain it without a request to the authors
+#   fetch           runtime | user_supplied | never
+#                   runtime       code may download it for the user (after printing the licence)
+#                   user_supplied you download it yourself after reading the terms; code only reads local files
+#                   never         code never downloads it
+#   role            used | private_results | not_used
+#   status          planned | done  (what the README may say about "Used here")
+#   last_checked    ISO date I read the provider page, or null if I did not
+#   notes           anything the reader should know
+
+datasets:
+  - name: fer2013
+    title: FER2013
+    what: "35,887 grayscale 48x48 web images, 7 emotions, no subject IDs."
+    access: "Kaggle competition data. A Kaggle account is needed and the competition rules must be accepted before download."
+    licence: "unconfirmed"
+    licence_status: unconfirmed
+    source_url: "https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge"
+    public: true
+    fetch: runtime
+    role: used
+    status: planned
+    last_checked: null
+    notes: "Terms not read yet. Do not use mirrors. Images are web-scraped photos of real people, so keep them out of the repo and README."
+
+  - name: ferplus
+    title: FER+ labels
+    what: "New labels for FER2013 from 10 annotators per image (label file only, no images)."
+    access: "Public GitHub repository (archived 13 June 2024) with a LICENSE.md file."
+    licence: "unconfirmed"
+    licence_status: unconfirmed
+    source_url: "https://github.com/microsoft/FERPlus"
+    public: true
+    fetch: runtime
+    role: used
+    status: planned
+    last_checked: 2026-11-08
+    notes: "Repository page seen on 2026-11-08. The licence text was not read. Read LICENSE.md and record it before release."
+
+  - name: jaffe
+    title: JAFFE
+    what: "213 images, 10 posers, 7 expressions."
+    access: "Zenodo record 14974867. Non-commercial scientific research only. Redistribution is not permitted (including via GitHub, Kaggle and Colab). Images must not be posted on the web."
+    licence: "Provider conditions of use (non-commercial scientific research). Not CC BY 4.0."
+    licence_status: confirmed
+    source_url: "https://zenodo.org/records/14974867"
+    public: true
+    fetch: user_supplied
+    role: used
+    status: planned
+    last_checked: 2026-11-08
+    notes: "Evaluation only. You download it yourself. No JAFFE images in the repo, README or demo, and no model weights trained on it. Cite the two articles named in the provider README."
+
+  - name: uibvfedplus_light
+    title: UIBVFEDPlus-Light
+    what: "3,300 PNG images (1080x1920) of 100 virtual characters under 4 lighting setups, six emotion labels."
+    access: "Download from the University of the Balearic Islands project page (33.7 GB)."
+    licence: "CC BY 4.0"
+    licence_status: partly_confirmed
+    source_url: "https://ugivia.uib.es/?p=1545"
+    public: true
+    fetch: runtime
+    role: used
+    status: planned
+    last_checked: 2026-11-08
+    notes: "CC BY 4.0 read on the project page and the university repository record. Confirm on the figshare record before release. Check whether a partial download is possible. Attribute the authors (Mascaro-Oliver et al., PLOS ONE 2023, doi 10.1371/journal.pone.0287006)."
+
+  - name: ckplus
+    title: CK+ (Extended Cohn-Kanade)
+    what: "593 video sequences, 123 subjects, lab-posed expressions."
+    access: "Request from the authors. Non-commercial. A consent form limits publishing faces."
+    licence: "Provider terms (request required)"
+    licence_status: partly_confirmed
+    source_url: "https://www.jeffcohn.net/resources/"
+    public: false
+    fetch: never
+    role: private_results
+    status: planned
+    last_checked: null
+    notes: "Terms as described in the thesis; not rechecked. Numbers and charts only. Never publish images, even in README figures. Do not link mirrors."
+
+  - name: kdef
+    title: KDEF
+    what: "4,900 pictures, 70 actors, 7 expressions, 5 angles (figures from the project brief; not checked)."
+    access: "Non-commercial research use. Request through the provider."
+    licence: "unconfirmed"
+    licence_status: unconfirmed
+    source_url: null
+    public: false
+    fetch: never
+    role: private_results
+    status: planned
+    last_checked: null
+    notes: "Read the provider's terms of use before any KDEF number goes in the README, and add the link here."
+
+  - name: hss_learning
+    title: HSS Learning
+    what: "Student expression logs from an e-learning platform, collected by a university lab."
+    access: "Not public (student data)."
+    licence: "Lab-owned, collected with consent"
+    licence_status: partly_confirmed
+    source_url: null
+    public: false
+    fetch: never
+    role: private_results
+    status: planned
+    last_checked: null
+    notes: "Never publish landmarks, screenshots or per-student data. Only aggregate numbers already published in the conference paper may be cited."
+
+  - name: affectnet
+    title: AffectNet
+    what: "Large in-the-wild expression dataset."
+    access: "Request to the authors, research use."
+    licence: "unconfirmed"
+    licence_status: unconfirmed
+    source_url: null
+    public: false
+    fetch: never
+    role: not_used
+    status: done
+    last_checked: null
+    notes: "Not used. Add the provider link after reading its page."
+
+  - name: rafdb
+    title: RAF-DB
+    what: "Large in-the-wild expression dataset."
+    access: "Request to the authors, research use."
+    licence: "unconfirmed"
+    licence_status: unconfirmed
+    source_url: null
+    public: false
+    fetch: never
+    role: not_used
+    status: done
+    last_checked: null
+    notes: "Not used. Add the provider link after reading its page."
+
+  - name: afew
+    title: AFEW
+    what: "Film clips with expression labels."
+    access: "Academic, non-commercial licence; no redistribution."
+    licence: "unconfirmed"
+    licence_status: unconfirmed
+    source_url: null
+    public: false
+    fetch: never
+    role: not_used
+    status: done
+    last_checked: null
+    notes: "Not used."
