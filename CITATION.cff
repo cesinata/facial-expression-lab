@@ -1,0 +1,9 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite it as below."
+title: "facial-expression-lab"
+authors:
+  - family-names: "Nainggolan"
+    given-names: "Cesilia Natasya"
+repository-code: "https://github.com/cesinata/facial-expression-lab"
+license: MIT
+version: 0.1.0
