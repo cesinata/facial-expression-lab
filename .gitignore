@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+
+# Private data stays on your machine. Only the README in data/private is tracked.
+data/private/*
+!data/private/README.md
+data/raw/
+data/cache/
+
+# Never commit images, archives, model files or large tables
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.bmp
+*.zip
+*.tar
+*.gz
+*.pt
+*.pth
+*.onnx
+*.task
+*.h5
+*.ckpt
+*.safetensors
+
+# Allow figures that contain no faces (charts) by adding them explicitly with git add -f
+# Notebook checkpoints
+.ipynb_checkpoints/
