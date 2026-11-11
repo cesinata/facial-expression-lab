@@ -1,31 +1,60 @@
 # facial-expression-lab
 
-What I built as an undergraduate, what was wrong with my evaluation, and how I am rebuilding it properly.
+Three small studies on facial expression recognition, built around one question: how much of a headline accuracy survives a proper evaluation?
 
-**Status: Phase 1 of 5 (evaluation harness).** The registry, split code, metrics and tests exist. No model has been trained in this repo yet, so every results cell below says "not measured". Results appear only after I run the notebooks and commit the JSON files in `results/`.
+**Status.** Code, tests, notebooks and a browser demo are written. A number appears in the results table only after I run the notebooks and commit the JSON files in `results/`. Rows that say "not measured" have not been run yet.
 
 ## What this repo contains
 
-| Study | Question | Data | Status |
+| Study | Question | Data | Notebook |
 |---|---|---|---|
-| 1. Landmark pipeline (from my 2023 thesis) | Do MediaPipe distance features, Mutual Information selection and a small 1D CNN hold up under a subject-wise split? | UIBVFEDPlus-Light (public). Private results on CK+ and KDEF as numbers only. | Planned |
-| 2. Class imbalance (from my 2022 research placement) | How far does accuracy mislead when one class is 92% of the data, and what fixes it? | Synthetic data with the same imbalance (label: simulated). The real data stays private. | Planned |
-| 3. A deployable recogniser | A small pretrained model on FER2013 with FER+ labels, tested out of distribution, exported to ONNX INT8, running in the browser. | FER2013 and FER+ labels (public). JAFFE if you supply it. | Planned |
+| 1. Landmark pipeline (from my 2023 thesis) | Do MediaPipe distance features, Mutual Information selection and a small classifier hold up under a subject-wise split? | UIBVFEDPlus-Light (public). CK+ and KDEF give numbers only. | `notebooks/03_study1_landmarks` |
+| 2. Class imbalance (from my 2022 research placement) | How far does accuracy mislead when one class is about 92% of the rows, and what changes it? | Simulated data. The real data is not public. | `notebooks/02_study2_class_imbalance` |
+| 3. A deployable recogniser | A small pretrained image model on FER2013 with FER+ labels, tested out of distribution, exported to ONNX, running in the browser. | FER2013 and FER+ labels. JAFFE if you supply it. | `notebooks/04_*`, `05_*` |
+
+Also: `notebooks/01_evaluation_leakage_demo` shows, on simulated data, how a random split of frames and selecting features on all rows change results.
 
 ## Results
 
-| Result | Value | Label |
-|---|---|---|
-| Thesis, CK+, 595 features, tuned (random frame split, test set also used for selection) | accuracy 91.95%, macro F1 0.90 (as printed in the thesis notebook) | reported (thesis) |
-| Same pipeline, subject-wise split | not measured | not measured |
-| Class-imbalance study, k-NN / logistic regression / linear SVM | accuracy 0.914 / 0.922 / 0.921, macro F1 0.250 / 0.272 / 0.243 (research report and conference paper) | reported (paper) |
-| Study 3 macro F1, latency | not measured | not measured |
+Every row comes from a file in `results/` or is an old number with its own label. Nothing is typed by hand (`scripts/make_results_table.py`).
 
-The first row is an old number kept for comparison. The code and notebooks in this repo show why it should not be read as a held-out result. See `docs/evaluation.md`.
+<!-- results:start -->
+| Result | Data | Accuracy | Macro F1 | Label |
+|---|---|---|---|---|
+| Thesis, CK+, 595 features, tuned. Random frame split, test set also used for selection | thesis / report | 91.95% | 0.90 | reported (thesis) |
+| Research report, student expression data, k-NN / logistic regression / linear SVM | thesis / report | 0.914 / 0.922 / 0.921 | 0.250 / 0.272 / 0.243 | reported (paper) |
+| leakage demo: logreg | legacy (random 70/15/15 rows, selection on all rows) | synthetic | 0.636 ± 0.067 | 0.624 ± 0.069 | simulated |
+| leakage demo: logreg | random 5-fold (rows) | synthetic | 0.577 ± 0.040 | 0.573 ± 0.039 | simulated |
+| leakage demo: logreg | subject-wise 5-fold | synthetic | 0.489 ± 0.033 | 0.485 ± 0.030 | simulated |
+| leakage demo: knn1 | legacy (random 70/15/15 rows, selection on all rows) | synthetic | 0.900 ± 0.034 | 0.895 ± 0.038 | simulated |
+| leakage demo: knn1 | random 5-fold (rows) | synthetic | 0.873 ± 0.005 | 0.872 ± 0.006 | simulated |
+| leakage demo: knn1 | subject-wise 5-fold | synthetic | 0.368 ± 0.066 | 0.369 ± 0.065 | simulated |
+| leakage demo: mlp | legacy (random 70/15/15 rows, selection on all rows) | synthetic | 0.564 ± 0.134 | 0.553 ± 0.129 | simulated |
+| leakage demo: mlp | random 5-fold (rows) | synthetic | 0.508 ± 0.057 | 0.498 ± 0.058 | simulated |
+| leakage demo: mlp | subject-wise 5-fold | synthetic | 0.455 ± 0.066 | 0.448 ± 0.068 | simulated |
+| selection leak demo: selected on all rows, then random 70/15/15 split | synthetic | 0.233 ± 0.073 | 0.220 ± 0.068 | simulated |
+| selection leak demo: selected inside each training fold, random 4-fold | synthetic | 0.237 ± 0.015 | 0.228 ± 0.019 | simulated |
+| class imbalance: knn9 / baseline | synthetic | 0.919 ± 0.001 | 0.138 ± 0.002 | simulated |
+| class imbalance: knn9 / oversample | synthetic | 0.705 ± 0.015 | 0.165 ± 0.014 | simulated |
+| class imbalance: logreg / baseline | synthetic | 0.919 ± 0.004 | 0.180 ± 0.012 | simulated |
+| class imbalance: logreg / class_weight | synthetic | 0.394 ± 0.042 | 0.156 ± 0.012 | simulated |
+| class imbalance: logreg / oversample | synthetic | 0.735 ± 0.039 | 0.229 ± 0.015 | simulated |
+| class imbalance: linear_svc / baseline | synthetic | 0.920 ± 0.001 | 0.137 ± 0.000 | simulated |
+| class imbalance: linear_svc / class_weight | synthetic | 0.843 ± 0.028 | 0.234 ± 0.013 | simulated |
+| class imbalance: linear_svc / oversample | synthetic | 0.790 ± 0.042 | 0.231 ± 0.014 | simulated |
+| Study 1: UIBVFEDPlus-Light | n/a | not measured | not measured | not measured |
+| Study 3: FER2013 with FER+ labels | n/a | not measured | not measured | not measured |
+| Study 3: out-of-distribution, UIBVFEDPlus-Light | n/a | not measured | not measured | not measured |
+| Study 3: out-of-distribution, JAFFE (you supply the data) | n/a | not measured | not measured | not measured |
+| Study 1: CK+ (private data, numbers only) | n/a | not measured | not measured | not measured |
+| Study 1: KDEF (private data, numbers only) | n/a | not measured | not measured | not measured |
+<!-- results:end -->
+
+The first two rows are old numbers kept for comparison. `docs/evaluation.md` explains why the thesis number should not be read as a held-out result.
 
 ## Datasets
 
-Several well-known facial-expression datasets cannot be shared or used freely. They need a request to the authors, limit use to non-commercial research, or restrict publishing the faces. This repository therefore **does not redistribute any dataset**. Every notebook that anyone can run uses only the open datasets marked "Used here" or "Planned". Results on restricted datasets appear as numbers and charts only, and the code expects you to obtain that data yourself.
+Several well-known facial-expression datasets cannot be shared or used freely. They need a request to the authors, limit use to non-commercial research, or restrict publishing the faces. This repository therefore **does not redistribute any dataset**. Every notebook anyone can run uses only the open datasets marked "Used here" or "Planned". Results on restricted datasets appear as numbers and charts only, and the code expects you to obtain that data yourself.
 
 <!-- datasets:start -->
 | Dataset | What it is | Access and terms | Licence status | In this repo |
@@ -41,27 +70,35 @@ Several well-known facial-expression datasets cannot be shared or used freely. T
 | RAF-DB | Large in-the-wild expression dataset. | Request to the authors, research use. [add provider link] | unconfirmed | Not used |
 | AFEW | Film clips with expression labels. | Academic, non-commercial licence; no redistribution. [add provider link] | unconfirmed | Not used |
 
-Licence information last checked: 2026-11-08. Entries marked unconfirmed have not been read on the provider's page.
+Licence information last checked: 2026-11-12. Entries marked unconfirmed have not been read on the provider's page.
 <!-- datasets:end -->
 
-The table above is generated from `datasets.yaml` by `scripts/make_dataset_table.py`. Terms can change, so read each provider's page before using a dataset. To reproduce the private-data results, request CK+ or KDEF from the providers and follow `docs/data.md` for the expected folder layout.
+The table is generated from `datasets.yaml` by `scripts/make_dataset_table.py`. Terms can change, so read each provider's page before using a dataset. To reproduce the private-data results, request CK+ or KDEF from the providers and follow `docs/data.md` for the expected folder layout.
 
-## Evaluation rules used here
+## Run it
 
-- Split by subject wherever subject IDs exist. FER2013 has none, so its results are labelled optimistic.
-- Report macro F1 and per-class recall next to accuracy.
-- Tune on a validation set made from training subjects. Touch the test fold once.
-- Label every number: measured (Colab T4), measured (host CPU), measured (local machine), measured (browser), estimated, simulated, reported, or not measured.
-
-## Run the checks
+No data or network needed for the simulated studies:
 
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 pytest
-python scripts/make_dataset_table.py --check
-python scripts/check_notebooks_registry.py
+python scripts/run_synthetic_studies.py     # about a minute; writes results/simulated_*.json
+python scripts/make_results_table.py        # fills the table above from results/
 ```
+
+For the real-data studies, follow `docs/reproduce.md`.
+
+## Demo
+
+Not published yet. When it is, the link goes here, with the measured browser latency and the model file's name. See `demo/README.md`.
+
+## Evaluation rules used here
+
+- Split by subject wherever subject IDs exist. FER2013 has none, so its results are labelled optimistic.
+- Report macro F1 and per-class recall next to accuracy.
+- Tune on a validation set made from training subjects. Read the test fold once.
+- Label every number: measured (Colab T4), measured (host CPU), measured (local machine), measured (browser), estimated, simulated, reported, or not measured.
 
 ## How AI was used and verified
 
@@ -71,7 +108,7 @@ What I checked: tests and CI, linting, dataset licences against the provider pag
 
 ## Responsible use
 
-Facial expression is not the same as inner emotion, and datasets carry demographic bias. See `docs/responsible_use.md` (to be completed in Phase 5).
+Facial expression is not the same as inner emotion, and datasets differ in who appears in them. See `docs/responsible_use.md` and `docs/model_card.md`.
 
 ## Licence
 
