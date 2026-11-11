@@ -16,7 +16,7 @@ Terms for every dataset are stored once in `datasets.yaml`. The table below is g
 | RAF-DB | Large in-the-wild expression dataset. | Request to the authors, research use. [add provider link] | unconfirmed | Not used |
 | AFEW | Film clips with expression labels. | Academic, non-commercial licence; no redistribution. [add provider link] | unconfirmed | Not used |
 
-Licence information last checked: 2026-11-08. Entries marked unconfirmed have not been read on the provider's page.
+Licence information last checked: 2026-11-12. Entries marked unconfirmed have not been read on the provider's page.
 <!-- datasets:end -->
 
 ## Rules
@@ -30,9 +30,9 @@ Licence information last checked: 2026-11-08. Entries marked unconfirmed have no
 
 Pass the folder with a command-line flag, for example `--ckplus-dir`. The folders can live anywhere. `data/private/ckplus/` and `data/private/kdef/` are convenience locations.
 
-CK+ layout expected by the thesis-era code: `extended-ck/<subject>/<sequence>/<frame>.png`, for example `S005/001/S005_001_00000001.png`, plus a label file. Phase 2 will document the exact label format and use only sequences with provider labels.
+CK+ layout expected by `scripts/extract_features.py --source ckplus`: an images folder with `<subject>/<sequence>/<subject>_<sequence>_<frame>.png` (for example `S005/001/S005_001_00000001.png`) and an emotion folder with the same subject and sequence folders holding `*_emotion.txt` files (one number, 0 to 7). Only sequences with an emotion file are used. Run `scripts/probe_dataset.py ckplus IMAGES EMOTIONS` to confirm your copy matches.
 
-KDEF: the standard folder-per-actor layout. The expected structure is confirmed in Phase 2 when the loader is written.
+KDEF: any folder tree holding the original files. Names like `AF01HAS.JPG` are parsed as session, gender, actor number, expression and angle. Straight-on pictures (angle S) are used by default, and an actor's two sessions are kept together in one split. Run `scripts/probe_dataset.py kdef PATH` to confirm.
 
 ## Notes recorded so far
 
