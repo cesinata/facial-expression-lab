@@ -27,6 +27,25 @@ jobs:
         run: python scripts/make_dataset_table.py --check
       - name: Notebooks only use datasets the registry allows
         run: python scripts/check_notebooks_registry.py
+      - name: Notebook pairs are in sync and have no outputs
+        run: python scripts/sync_notebooks.py --check
+      - name: README results table is up to date
+        run: python scripts/make_results_table.py --check
+
+  torch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install (CPU PyTorch)
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -e ".[dev]" onnx onnxruntime
+      - name: PyTorch tests
+        run: pytest -q tests/test_torch_models.py
 
   hygiene:
     runs-on: ubuntu-latest
@@ -34,8 +53,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: No images, archives, model files or private data are tracked
         run: |
-          bad=$(git ls-files | grep -E '\.(png|jpe?g|gif|bmp|zip|tar|gz|pt|pth|onnx|task|h5|ckpt|safetensors)$|^data/private/[^R]|^data/raw/' || true)
+          bad=$(git ls-files | grep -E '\.(png|jpe?g|gif|bmp|zip|tar|gz|pt|pth|onnx|task|h5|ckpt|safetensors)$|^data/private/[^R]|^data/raw/|^data/cache/|^private/' || true)
           if [ -n "$bad" ]; then echo "Tracked files that must not be in git:"; echo "$bad"; exit 1; fi
+      - name: Demo JavaScript parses
+        run: |
+          cp demo/app.js /tmp/app.mjs
+          node --check /tmp/app.mjs
       - name: No large files
         run: |
           big=$(git ls-files -z | xargs -0 du -k | awk '$1 > 1024 {print $2}')

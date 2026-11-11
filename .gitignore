@@ -1,3 +1,6 @@
+# macOS
+.DS_Store
+
 # Python
 __pycache__/
 *.pyc
@@ -13,6 +16,9 @@ data/private/*
 !data/private/README.md
 data/raw/
 data/cache/
+
+# Local review drafts (AI log entries to review before they go in docs/ai-log.md)
+/private/
 
 # Never commit images, archives, model files or large tables
 *.png
