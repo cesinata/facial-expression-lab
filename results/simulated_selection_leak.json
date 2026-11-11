@@ -1,0 +1,40 @@
+{
+  "dataset": "synthetic",
+  "label": "simulated",
+  "metrics": {
+    "chance_accuracy": 0.25,
+    "keep_fraction": 0.04,
+    "n_noise_features": 300,
+    "n_rows": 200,
+    "table": [
+      {
+        "accuracy": 0.2333333333333333,
+        "accuracy_std": 0.07302967433402215,
+        "macro_f1": 0.21951470871749507,
+        "macro_f1_std": 0.06849371797428118,
+        "n_repeats": 5,
+        "name": "selected on all rows, then random 70/15/15 split"
+      },
+      {
+        "accuracy": 0.23700000000000002,
+        "accuracy_std": 0.01503329637837291,
+        "macro_f1": 0.22759034335017686,
+        "macro_f1_std": 0.019464086731811672,
+        "n_repeats": 5,
+        "name": "selected inside each training fold, random 4-fold"
+      }
+    ]
+  },
+  "name": "selection leak demo",
+  "protocol": {
+    "split": "selection on all rows vs inside folds, 5 seeds, pure-noise features"
+  },
+  "seed": 0,
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "python": "3.14.7",
+    "sklearn": "1.9.1"
+  },
+  "written_utc": "2026-11-11T16:21:22+00:00"
+}

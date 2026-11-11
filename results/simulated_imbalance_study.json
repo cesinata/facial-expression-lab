@@ -1,0 +1,81 @@
+{
+  "dataset": "synthetic",
+  "label": "simulated",
+  "metrics": {
+    "always_predict_majority_accuracy": 0.9196666666666666,
+    "majority_class_share": 0.9196666666666666,
+    "n_rows": 12000,
+    "n_users": 120,
+    "split": "user-grouped 5-fold",
+    "table": [
+      {
+        "accuracy": 0.9193333333333333,
+        "accuracy_std": 0.0013043729868748542,
+        "macro_f1": 0.13782271524472378,
+        "macro_f1_std": 0.0021500539819755992,
+        "name": "knn9 / baseline"
+      },
+      {
+        "accuracy": 0.7048333333333333,
+        "accuracy_std": 0.015268431484602468,
+        "macro_f1": 0.16497978876214475,
+        "macro_f1_std": 0.01381745183554002,
+        "name": "knn9 / oversample"
+      },
+      {
+        "accuracy": 0.9190833333333334,
+        "accuracy_std": 0.004433145359423453,
+        "macro_f1": 0.18049625315199994,
+        "macro_f1_std": 0.011902080808983057,
+        "name": "logreg / baseline"
+      },
+      {
+        "accuracy": 0.3943333333333333,
+        "accuracy_std": 0.04169436579310074,
+        "macro_f1": 0.15637559327465633,
+        "macro_f1_std": 0.011547143581469363,
+        "name": "logreg / class_weight"
+      },
+      {
+        "accuracy": 0.7348333333333333,
+        "accuracy_std": 0.03886028213713554,
+        "macro_f1": 0.2286638140012272,
+        "macro_f1_std": 0.014578113206906544,
+        "name": "logreg / oversample"
+      },
+      {
+        "accuracy": 0.9196666666666665,
+        "accuracy_std": 0.001297700958533091,
+        "macro_f1": 0.13687886800778792,
+        "macro_f1_std": 0.0001006359501666882,
+        "name": "linear_svc / baseline"
+      },
+      {
+        "accuracy": 0.8428333333333334,
+        "accuracy_std": 0.028284885048771562,
+        "macro_f1": 0.23441531634147755,
+        "macro_f1_std": 0.013447550077314498,
+        "name": "linear_svc / class_weight"
+      },
+      {
+        "accuracy": 0.78975,
+        "accuracy_std": 0.04178171616335974,
+        "macro_f1": 0.23128833190883613,
+        "macro_f1_std": 0.01428990408269491,
+        "name": "linear_svc / oversample"
+      }
+    ]
+  },
+  "name": "class imbalance",
+  "protocol": {
+    "split": "user-grouped 5-fold, 1 data seed"
+  },
+  "seed": 0,
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "python": "3.14.7",
+    "sklearn": "1.9.1"
+  },
+  "written_utc": "2026-11-11T16:21:23+00:00"
+}

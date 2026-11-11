@@ -1,0 +1,101 @@
+{
+  "dataset": "synthetic",
+  "label": "simulated",
+  "metrics": {
+    "chance_accuracy": 0.25,
+    "note": "simulated sequence data: 30 subjects, 4 classes, 4 near-identical frames per sequence",
+    "seeds": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "table": [
+      {
+        "accuracy": 0.6361111111111111,
+        "accuracy_std": 0.06712803318663649,
+        "macro_f1": 0.6242704228720088,
+        "macro_f1_std": 0.06941280778192657,
+        "n_repeats": 5,
+        "name": "logreg | legacy (random 70/15/15 rows, selection on all rows)"
+      },
+      {
+        "accuracy": 0.5770833333333334,
+        "accuracy_std": 0.03985651347856039,
+        "macro_f1": 0.5728552802377307,
+        "macro_f1_std": 0.03938556635836726,
+        "n_repeats": 5,
+        "name": "logreg | random 5-fold (rows)"
+      },
+      {
+        "accuracy": 0.48916666666666664,
+        "accuracy_std": 0.033108617542198224,
+        "macro_f1": 0.48516836002826313,
+        "macro_f1_std": 0.030074284944500516,
+        "n_repeats": 5,
+        "name": "logreg | subject-wise 5-fold"
+      },
+      {
+        "accuracy": 0.9,
+        "accuracy_std": 0.03447131568330794,
+        "macro_f1": 0.8945647585474774,
+        "macro_f1_std": 0.038086175355940444,
+        "n_repeats": 5,
+        "name": "knn1 | legacy (random 70/15/15 rows, selection on all rows)"
+      },
+      {
+        "accuracy": 0.8725000000000002,
+        "accuracy_std": 0.00549621081594703,
+        "macro_f1": 0.8723684247339533,
+        "macro_f1_std": 0.005722135983290449,
+        "n_repeats": 5,
+        "name": "knn1 | random 5-fold (rows)"
+      },
+      {
+        "accuracy": 0.36791666666666667,
+        "accuracy_std": 0.06604659550482356,
+        "macro_f1": 0.36933635988318836,
+        "macro_f1_std": 0.06533219591664044,
+        "n_repeats": 5,
+        "name": "knn1 | subject-wise 5-fold"
+      },
+      {
+        "accuracy": 0.5638888888888889,
+        "accuracy_std": 0.13396839501986105,
+        "macro_f1": 0.5532859519041318,
+        "macro_f1_std": 0.12860176629872028,
+        "n_repeats": 5,
+        "name": "mlp | legacy (random 70/15/15 rows, selection on all rows)"
+      },
+      {
+        "accuracy": 0.5079166666666667,
+        "accuracy_std": 0.05651020065242893,
+        "macro_f1": 0.49849167607325773,
+        "macro_f1_std": 0.0584178072901008,
+        "n_repeats": 5,
+        "name": "mlp | random 5-fold (rows)"
+      },
+      {
+        "accuracy": 0.45499999999999996,
+        "accuracy_std": 0.06586233538390679,
+        "macro_f1": 0.4479593975809234,
+        "macro_f1_std": 0.06766781887660667,
+        "n_repeats": 5,
+        "name": "mlp | subject-wise 5-fold"
+      }
+    ]
+  },
+  "name": "leakage demo",
+  "protocol": {
+    "split": "legacy vs random 5-fold vs subject-wise 5-fold, 5 seeds"
+  },
+  "seed": 0,
+  "versions": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "python": "3.14.7",
+    "sklearn": "1.9.1"
+  },
+  "written_utc": "2026-11-11T16:21:14+00:00"
+}
