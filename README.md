@@ -48,6 +48,34 @@ Every row comes from a file in `results/` or is an old number with its own label
 | Study 3: out-of-distribution, JAFFE (you supply the data) | n/a | not measured | not measured | not measured |
 | Study 1: CK+ (private data, numbers only) | n/a | not measured | not measured | not measured |
 | Study 1: KDEF (private data, numbers only) | n/a | not measured | not measured | not measured |
+| study1_jaffe: distances 2D | majority | subject-wise 10-fold | jaffe | 0.145 ± 0.011 | 0.036 ± 0.002 | measured (local machine) |
+| study1_jaffe: distances 2D | logreg | subject-wise 10-fold | jaffe | 0.573 ± 0.220 | 0.523 ± 0.253 | measured (local machine) |
+| study1_jaffe: distances 2D | logreg | random 10-fold (rows) | jaffe | 0.864 ± 0.069 | 0.852 ± 0.087 | measured (local machine) |
+| study1_jaffe: distances 2D | logreg | legacy thesis protocol | jaffe | 0.844 | 0.853 | measured (local machine) |
+| study1_jaffe: distances 2D | mlp | subject-wise 10-fold | jaffe | 0.532 ± 0.184 | 0.471 ± 0.191 | measured (local machine) |
+| study1_jaffe: distances 2D | mlp | random 10-fold (rows) | jaffe | 0.727 ± 0.117 | 0.715 ± 0.123 | measured (local machine) |
+| study1_jaffe: distances 2D | mlp | legacy thesis protocol | jaffe | 0.562 | 0.556 | measured (local machine) |
+| study1_jaffe: distances 3D | majority | subject-wise 10-fold | jaffe | 0.145 ± 0.011 | 0.036 ± 0.002 | measured (local machine) |
+| study1_jaffe: distances 3D | logreg | subject-wise 10-fold | jaffe | 0.528 ± 0.171 | 0.459 ± 0.201 | measured (local machine) |
+| study1_jaffe: distances 3D | logreg | random 10-fold (rows) | jaffe | 0.864 ± 0.065 | 0.860 ± 0.067 | measured (local machine) |
+| study1_jaffe: distances 3D | logreg | legacy thesis protocol | jaffe | 0.906 | 0.910 | measured (local machine) |
+| study1_jaffe: distances 3D | mlp | subject-wise 10-fold | jaffe | 0.536 ± 0.181 | 0.465 ± 0.204 | measured (local machine) |
+| study1_jaffe: distances 3D | mlp | random 10-fold (rows) | jaffe | 0.718 ± 0.152 | 0.705 ± 0.171 | measured (local machine) |
+| study1_jaffe: distances 3D | mlp | legacy thesis protocol | jaffe | 0.594 | 0.584 | measured (local machine) |
+| study1_jaffe: distances 3D + blendshapes | majority | subject-wise 10-fold | jaffe | 0.145 ± 0.011 | 0.036 ± 0.002 | measured (local machine) |
+| study1_jaffe: distances 3D + blendshapes | logreg | subject-wise 10-fold | jaffe | 0.569 ± 0.205 | 0.509 ± 0.244 | measured (local machine) |
+| study1_jaffe: distances 3D + blendshapes | logreg | random 10-fold (rows) | jaffe | 0.850 ± 0.070 | 0.843 ± 0.074 | measured (local machine) |
+| study1_jaffe: distances 3D + blendshapes | logreg | legacy thesis protocol | jaffe | 0.875 | 0.880 | measured (local machine) |
+| study1_jaffe: distances 3D + blendshapes | mlp | subject-wise 10-fold | jaffe | 0.554 ± 0.168 | 0.500 ± 0.176 | measured (local machine) |
+| study1_jaffe: distances 3D + blendshapes | mlp | random 10-fold (rows) | jaffe | 0.653 ± 0.170 | 0.642 ± 0.177 | measured (local machine) |
+| study1_jaffe: distances 3D + blendshapes | mlp | legacy thesis protocol | jaffe | 0.688 | 0.715 | measured (local machine) |
+| study1_jaffe: distances 3D + points + blendshapes | majority | subject-wise 10-fold | jaffe | 0.145 ± 0.011 | 0.036 ± 0.002 | measured (local machine) |
+| study1_jaffe: distances 3D + points + blendshapes | logreg | subject-wise 10-fold | jaffe | 0.555 ± 0.189 | 0.502 ± 0.219 | measured (local machine) |
+| study1_jaffe: distances 3D + points + blendshapes | logreg | random 10-fold (rows) | jaffe | 0.868 ± 0.063 | 0.864 ± 0.066 | measured (local machine) |
+| study1_jaffe: distances 3D + points + blendshapes | logreg | legacy thesis protocol | jaffe | 0.844 | 0.853 | measured (local machine) |
+| study1_jaffe: distances 3D + points + blendshapes | mlp | subject-wise 10-fold | jaffe | 0.519 ± 0.113 | 0.458 ± 0.124 | measured (local machine) |
+| study1_jaffe: distances 3D + points + blendshapes | mlp | random 10-fold (rows) | jaffe | 0.741 ± 0.162 | 0.715 ± 0.185 | measured (local machine) |
+| study1_jaffe: distances 3D + points + blendshapes | mlp | legacy thesis protocol | jaffe | 0.812 | 0.806 | measured (local machine) |
 <!-- results:end -->
 
 The first two rows are old numbers kept for comparison. `docs/evaluation.md` explains why the thesis number should not be read as a held-out result.
