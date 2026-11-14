@@ -33,21 +33,21 @@ datasets:
     role: used
     status: planned
     last_checked: null
-    notes: "Terms not read yet. Do not use mirrors. Images are web-scraped photos of real people, so keep them out of the repo and README."
+    notes: "Terms not read yet. Use the official competition file (fer2013.csv inside fer2013.tar.gz). Image-folder mirrors do not carry the row numbers or Usage split that FER+ labels need, and their terms are unconfirmed. Images are web-scraped photos of real people, so keep them out of the repo and README."
 
   - name: ferplus
     title: FER+ labels
     what: "New labels for FER2013 from 10 annotators per image (label file only, no images)."
     access: "Public GitHub repository (archived 13 June 2024) with a LICENSE.md file."
-    licence: "unconfirmed"
-    licence_status: unconfirmed
+    licence: "MIT (Copyright Microsoft Corporation), per the repository's LICENSE.md"
+    licence_status: confirmed
     source_url: "https://github.com/microsoft/FERPlus"
     public: true
     fetch: runtime
     role: used
     status: planned
-    last_checked: 2026-11-08
-    notes: "Repository page seen on 2026-11-08. The licence text was not read. Read LICENSE.md and record it before release."
+    last_checked: 2026-11-14
+    notes: "LICENSE.md from the repository download was read on 2026-11-14: MIT. It covers the FER+ repository contents. The FER2013 images are separate and keep the Kaggle terms."
 
   - name: jaffe
     title: JAFFE

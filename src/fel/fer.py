@@ -19,27 +19,51 @@ SHARED_WITH_SIX = {  # FER+ class -> the six-emotion names used by UIBVFEDPlus-L
 }
 
 
-def load_fer2013_csv(path: str) -> tuple[np.ndarray, np.ndarray]:
-    """Return (pixels uint8 (n, 48, 48), usage array)."""
+def _read(path: str) -> pd.DataFrame:
+    """Read a CSV and strip spaces from the column names (icml_face_data.csv has ' pixels')."""
     df = pd.read_csv(path)
+    df.columns = [str(c).strip() for c in df.columns]
+    return df
+
+
+def load_fer2013_csv(path: str) -> tuple[np.ndarray, np.ndarray]:
+    """Return (pixels uint8 (n, 48, 48), usage array). Works for fer2013.csv and
+    icml_face_data.csv (same rows, same order)."""
+    df = _read(path)
     for col in ("pixels", "Usage"):
         if col not in df.columns:
             raise ValueError(f"fer2013.csv: missing column {col!r}; found {list(df.columns)}")
     arr = np.stack([np.fromstring(s, dtype=np.uint8, sep=" ") for s in df["pixels"]])
     if arr.shape[1] != 48 * 48:
         raise ValueError(f"expected 2304 pixels per row, got {arr.shape[1]}")
-    return arr.reshape(-1, 48, 48), df["Usage"].to_numpy()
+    return arr.reshape(-1, 48, 48), df["Usage"].astype(str).str.strip().to_numpy()
 
 
 def load_ferplus_votes(path: str) -> np.ndarray:
     """Return vote counts (n, 10) in the order FERPLUS_CLASSES + FERPLUS_EXTRA."""
-    df = pd.read_csv(path)
-    df.columns = [c.strip() for c in df.columns]
+    df = _read(path)
     need = FERPLUS_CLASSES + FERPLUS_EXTRA
     missing = [c for c in need if c not in df.columns]
     if missing:
         raise ValueError(f"fer2013new.csv: missing columns {missing}; found {list(df.columns)}")
     return df[need].fillna(0).to_numpy(dtype=int)
+
+
+def load_ferplus_usage(path: str) -> np.ndarray | None:
+    """The Usage column of fer2013new.csv, or None if the file has no such column."""
+    df = _read(path)
+    if "Usage" not in df.columns:
+        return None
+    return df["Usage"].astype(str).str.strip().to_numpy()
+
+
+def usage_mismatch_fraction(a: np.ndarray, b: np.ndarray) -> float:
+    """Share of rows where two Usage arrays disagree. Used to check that FER+ rows line up
+    with FER2013 rows. Raises if the lengths differ."""
+    a, b = np.asarray(a), np.asarray(b)
+    if len(a) != len(b):
+        raise ValueError(f"row counts differ: {len(a)} vs {len(b)}")
+    return float((a != b).mean())
 
 
 def ferplus_majority(votes: np.ndarray) -> np.ndarray:

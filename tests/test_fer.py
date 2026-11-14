@@ -48,3 +48,33 @@ def test_load_ferplus_votes_checks_columns(tmp_path):
 
 def test_shared_emotion_map_has_six_entries():
     assert len(fer.SHARED_WITH_SIX) == 6 and "contempt" not in fer.SHARED_WITH_SIX
+
+
+def test_icml_style_columns_with_leading_spaces_are_accepted(tmp_path):
+    pix = " ".join(["7"] * 2304)
+    pd.DataFrame({"emotion": [3], " Usage": ["PublicTest"], " pixels": [pix]}).to_csv(
+        tmp_path / "icml_face_data.csv", index=False)
+    x, usage = fer.load_fer2013_csv(str(tmp_path / "icml_face_data.csv"))
+    assert x.shape == (1, 48, 48) and usage.tolist() == ["PublicTest"]
+
+
+def test_study3_script_checks_that_fer_and_ferplus_rows_line_up():
+    from pathlib import Path
+
+    src = (Path(__file__).resolve().parents[1] / "scripts" / "study3.py").read_text()
+    assert "load_ferplus_usage" in src and "usage_mismatch_fraction" in src
+
+
+def test_usage_alignment_helpers(tmp_path):
+    cols = fer.FERPLUS_CLASSES + fer.FERPLUS_EXTRA
+    df = pd.DataFrame([[1] * 10, [2] * 10], columns=cols)
+    df.insert(0, "Usage", ["Training", " PrivateTest "])
+    df.to_csv(tmp_path / "plus.csv", index=False)
+    u = fer.load_ferplus_usage(str(tmp_path / "plus.csv"))
+    assert u.tolist() == ["Training", "PrivateTest"]
+    assert fer.usage_mismatch_fraction(u, np.array(["Training", "PrivateTest"])) == 0.0
+    assert fer.usage_mismatch_fraction(u, np.array(["Training", "Training"])) == 0.5
+    with pytest.raises(ValueError):
+        fer.usage_mismatch_fraction(u, np.array(["Training"]))
+    pd.DataFrame([[1] * 10], columns=cols).to_csv(tmp_path / "nousage.csv", index=False)
+    assert fer.load_ferplus_usage(str(tmp_path / "nousage.csv")) is None
