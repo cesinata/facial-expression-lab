@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>facial-expression-lab demo</title>
+<style>
+  :root { --bg:#ffffff; --fg:#1a1a1a; --muted:#5a5a5a; --bar:#3b6fb6; --track:#e6e9ee; --warn:#8a4b00; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#14171c; --fg:#e8eaed; --muted:#a3a9b3; --bar:#7fa8e0; --track:#2a303a; --warn:#e0a85c; }
+  }
+  body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--fg);
+         max-width: 40rem; margin: 1.5rem auto; padding: 0 1rem; line-height: 1.5; }
+  video { width: 100%; max-height: 22rem; background: #000; border-radius: 6px; transform: scaleX(-1); }
+  button { font: inherit; padding: .5rem 1rem; }
+  .row { display: grid; grid-template-columns: 6rem 1fr 3.5rem; gap: .5rem; align-items: center; }
+  .track { background: var(--track); height: .8rem; border-radius: 4px; overflow: hidden; }
+  .bar { background: var(--bar); height: 100%; width: 0; }
+  .muted { color: var(--muted); font-size: .9rem; }
+  .warn { color: var(--warn); }
+  #mirror { font-size: 6rem; text-align: center; line-height: 1.1; margin: .5rem 0; }
+  .center { text-align: center; }
+</style>
+</head>
+<body>
+<h1>Facial expression demo</h1>
+<p class="muted">Everything runs in your browser. Video frames are not uploaded anywhere. This shows
+what a small model predicts from the pixels of a face. It does not tell you how anyone feels.
+Read the model card and the evaluation notes in the repository before drawing conclusions.</p>
+
+<p><button id="start">Start camera</button> <span id="status" class="muted">Not started.</span></p>
+<video id="video" playsinline muted></video>
+<canvas id="crop" width="48" height="48" hidden></canvas>
+
+<h2>Emoji mirror</h2>
+<div id="mirror" aria-live="polite">&#10068;</div>
+<p class="center muted">A guess from pixels. Not what you feel.</p>
+<p class="center muted"><label for="smooth">Smoothing window:</label>
+  <input id="smooth" type="range" min="1" max="15" value="5">
+  <span id="smoothval">5</span> frames (more frames: steadier, but the emoji lags more)</p>
+
+<h2>Model output</h2>
+<div id="bars"></div>
+<p class="muted">Median model time over the last 30 frames (measured in this browser, this device):
+<span id="latency">n/a</span></p>
+<p class="muted warn" id="notice"></p>
+
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/ort.min.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>

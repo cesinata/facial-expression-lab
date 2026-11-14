@@ -15,3 +15,12 @@ Defaults chosen where the project brief left a choice. Change one by editing thi
 | 2026-11-08 | Every metric comes from a run by the owner. Until then the README says "not measured". | No claim without output. |
 | 2026-11-08 | `scripts/preflight.sh` reads extra banned words from `.git/info/preflight-patterns`, not from a committed list. | A committed list of words to avoid would itself name them. |
 | 2026-11-08 | CI actions pinned to major version tags (checkout v4, setup-python v5). Latest versions were not checked. | No network access when written. Check before release. |
+| 2026-11-11 | New AI-log entries are drafted in `private/ai-log-drafts.md` (ignored by git) and moved into `docs/ai-log.md` after review. | Review happens at the end of the project. The Phase 1 entries already in git history stay as they are. |
+| 2026-11-11 | Study 1 uses 40 documented landmark indices and all 780 pairwise distances, normalised by inter-ocular distance. | The thesis pair lists were not available. Region claims need a visual check first (notebook 03). |
+| 2026-11-11 | The 1D CNN is a re-implementation of the thesis block structure, with the best-validation checkpoint reloaded. | Fixes a known flaw in the thesis code. It is not the thesis model. |
+| 2026-11-11 | UIBVFEDPlus-Light label and subject patterns are supplied as regexes after running the probe script. | The folder layout was not known when the loader was written. |
+| 2026-11-11 | CK+ runs use only provider-labelled sequences. Hand-labelled sequences, if used, are a separate run. | About a quarter of the sequences in the earlier work had no provider label. |
+| 2026-11-11 | The browser demo uses the FP32 ONNX model unless INT8 has been run in the browser. | ONNX Runtime Web may not support every INT8 operator. |
+| 2026-11-11 | Demo CDN versions: onnxruntime-web 1.30.0 and @mediapipe/tasks-vision 0.10.14. The first was seen on a release listing about a month old. The second comes from memory, not a lookup. | Pinned to exact versions at least two weeks old. Verify both before release. |
+| 2026-11-11 | GitHub Actions versions (checkout v4, setup-python v5, configure-pages v5, upload-pages-artifact v3, deploy-pages v4) are major tags from memory. | No network when written. Check before release. |
+| 2026-11-11 | Latency is measured one sample at a time and labelled with where it ran. | Batch throughput and single-sample latency differ. |

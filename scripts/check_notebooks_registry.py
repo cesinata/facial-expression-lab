@@ -8,6 +8,7 @@ in the registry and have fetch: runtime.
 
 from __future__ import annotations
 
+import argparse
 import json
 import re
 import sys
@@ -46,6 +47,9 @@ def check(paths: list[Path], registry: dict) -> list[str]:
 
 
 def main(argv: list[str]) -> int:
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("paths", nargs="*", help="files or folders (default: notebooks/ and scripts/)")
+    argv = ap.parse_args(argv).paths
     roots = [Path(a) for a in argv] or [ROOT / "notebooks", ROOT / "scripts"]
     files: list[Path] = []
     for r in roots:

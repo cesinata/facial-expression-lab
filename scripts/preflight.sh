@@ -13,7 +13,7 @@ git diff --staged --stat
 
 echo "== banned file types or private paths"
 bad=$(git diff --staged --name-only --diff-filter=ACMR | grep -E \
-  '(\.(png|jpe?g|gif|bmp|zip|tar|gz|pt|pth|onnx|task|h5|ckpt|safetensors)$)|(^data/private/[^R])|(^data/raw/)' \
+  '(\.(png|jpe?g|gif|bmp|zip|tar|gz|pt|pth|onnx|task|h5|ckpt|safetensors)$)|(^data/private/[^R])|(^data/raw/)|(^data/cache/)|(^private/)' \
   || true)
 if [ -n "$bad" ]; then
   echo "BLOCKED (images, archives, model files or private data):"
