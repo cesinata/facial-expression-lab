@@ -39,6 +39,13 @@ def load_split(fer_csv: str, ferplus_csv: str):
     labels = fer.ferplus_majority(fer.load_ferplus_votes(ferplus_csv))
     if len(labels) != len(pixels):
         raise SystemExit(f"row counts differ: fer2013 {len(pixels)} vs fer2013new {len(labels)}")
+    plus_usage = fer.load_ferplus_usage(ferplus_csv)
+    if plus_usage is not None:
+        bad = fer.usage_mismatch_fraction(usage, plus_usage)
+        if bad > 0.01:
+            raise SystemExit(f"FER2013 and FER+ rows do not line up ({bad:.1%} of Usage values "
+                             "differ). Check that both files are the originals, same order.")
+        print(f"FER2013 and FER+ Usage columns agree on {1 - bad:.2%} of rows")
     keep = labels >= 0
     print(f"rows kept after FER+ rules: {keep.sum()}/{len(keep)}")
     parts = fer.split_by_usage(usage)

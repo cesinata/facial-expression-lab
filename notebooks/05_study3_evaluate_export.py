@@ -17,14 +17,26 @@ drive.mount("/content/drive")
 # %cd facial-expression-lab
 # !pip install -q -e ".[torch,images,plots]"
 
+# %% [markdown]
+# ## What is in my Drive folder and in each zip?
+# Nothing is extracted yet. This only lists names and counts.
+
+# %%
+DRIVE = "/content/drive/MyDrive/facial-expression-lab-data"
+# !python scripts/show_tree.py {DRIVE}
+
 # %%
 import glob
+import json
 
 DRIVE = "/content/drive/MyDrive/facial-expression-lab-data"
-# !mkdir -p /content/fer_data data/cache/study3 && tar -xzf {DRIVE}/fer2013.tar.gz -C /content/fer_data
+KAGGLE_FILE = (sorted(glob.glob(f"{DRIVE}/fer2013*.tar.gz")) + sorted(glob.glob(f"{DRIVE}/fer2013*.zip")))[0]
+FERPLUS_ZIP = glob.glob(f"{DRIVE}/*ERPlus*.zip")[0]
+# !mkdir -p data/cache/study3
+# !python scripts/prepare_fer_data.py --kaggle-file "{KAGGLE_FILE}" --ferplus-zip "{FERPLUS_ZIP}" --out-dir /content/fer_data
 # !cp {DRIVE}/study3/model.pt {DRIVE}/study3/meta.json data/cache/study3/
-FER_CSV = glob.glob("/content/fer_data/**/fer2013.csv", recursive=True)[0]
-FERPLUS_CSV = f"{DRIVE}/fer2013new.csv"
+P = json.load(open("/content/fer_data/paths.json"))
+FER_CSV, FERPLUS_CSV = P["fer_csv"], P["ferplus_csv"]
 
 # %%
 # !python scripts/study3.py evaluate --fer-csv {FER_CSV} --ferplus-csv {FERPLUS_CSV} --label "measured (host CPU)"
