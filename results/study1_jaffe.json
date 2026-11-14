@@ -1,0 +1,446 @@
+{
+  "dataset": "jaffe",
+  "label": "measured (local machine)",
+  "metrics": {
+    "class_counts": {
+      "anger": 30,
+      "disgust": 29,
+      "fear": 32,
+      "happiness": 31,
+      "neutral": 30,
+      "sadness": 31,
+      "surprise": 30
+    },
+    "detail": {
+      "distances 2D | logreg": {
+        "never_predicted": [],
+        "per_class_recall_subject_wise": {
+          "anger": 0.5,
+          "disgust": 0.5172413793103449,
+          "fear": 0.4375,
+          "happiness": 0.6129032258064516,
+          "neutral": 0.6666666666666666,
+          "sadness": 0.5806451612903226,
+          "surprise": 0.7333333333333333
+        }
+      },
+      "distances 2D | majority": {
+        "never_predicted": [
+          "anger",
+          "disgust",
+          "neutral",
+          "sadness",
+          "surprise"
+        ],
+        "per_class_recall_subject_wise": {
+          "anger": 0.0,
+          "disgust": 0.0,
+          "fear": 0.75,
+          "happiness": 0.22580645161290322,
+          "neutral": 0.0,
+          "sadness": 0.0,
+          "surprise": 0.0
+        }
+      },
+      "distances 2D | mlp": {
+        "never_predicted": [],
+        "per_class_recall_subject_wise": {
+          "anger": 0.6,
+          "disgust": 0.6206896551724138,
+          "fear": 0.1875,
+          "happiness": 0.8064516129032258,
+          "neutral": 0.43333333333333335,
+          "sadness": 0.5161290322580645,
+          "surprise": 0.6
+        }
+      },
+      "distances 3D + blendshapes | logreg": {
+        "never_predicted": [],
+        "per_class_recall_subject_wise": {
+          "anger": 0.7333333333333333,
+          "disgust": 0.4827586206896552,
+          "fear": 0.46875,
+          "happiness": 0.6451612903225806,
+          "neutral": 0.5,
+          "sadness": 0.4838709677419355,
+          "surprise": 0.7
+        }
+      },
+      "distances 3D + blendshapes | majority": {
+        "never_predicted": [
+          "anger",
+          "disgust",
+          "neutral",
+          "sadness",
+          "surprise"
+        ],
+        "per_class_recall_subject_wise": {
+          "anger": 0.0,
+          "disgust": 0.0,
+          "fear": 0.75,
+          "happiness": 0.22580645161290322,
+          "neutral": 0.0,
+          "sadness": 0.0,
+          "surprise": 0.0
+        }
+      },
+      "distances 3D + blendshapes | mlp": {
+        "never_predicted": [],
+        "per_class_recall_subject_wise": {
+          "anger": 0.5,
+          "disgust": 0.5517241379310345,
+          "fear": 0.46875,
+          "happiness": 0.7741935483870968,
+          "neutral": 0.5666666666666667,
+          "sadness": 0.3870967741935484,
+          "surprise": 0.6666666666666666
+        }
+      },
+      "distances 3D + points + blendshapes | logreg": {
+        "never_predicted": [],
+        "per_class_recall_subject_wise": {
+          "anger": 0.5333333333333333,
+          "disgust": 0.5172413793103449,
+          "fear": 0.46875,
+          "happiness": 0.6774193548387096,
+          "neutral": 0.6333333333333333,
+          "sadness": 0.3870967741935484,
+          "surprise": 0.7
+        }
+      },
+      "distances 3D + points + blendshapes | majority": {
+        "never_predicted": [
+          "anger",
+          "disgust",
+          "neutral",
+          "sadness",
+          "surprise"
+        ],
+        "per_class_recall_subject_wise": {
+          "anger": 0.0,
+          "disgust": 0.0,
+          "fear": 0.75,
+          "happiness": 0.22580645161290322,
+          "neutral": 0.0,
+          "sadness": 0.0,
+          "surprise": 0.0
+        }
+      },
+      "distances 3D + points + blendshapes | mlp": {
+        "never_predicted": [],
+        "per_class_recall_subject_wise": {
+          "anger": 0.43333333333333335,
+          "disgust": 0.5862068965517241,
+          "fear": 0.34375,
+          "happiness": 0.8064516129032258,
+          "neutral": 0.5,
+          "sadness": 0.2903225806451613,
+          "surprise": 0.7
+        }
+      },
+      "distances 3D | logreg": {
+        "never_predicted": [],
+        "per_class_recall_subject_wise": {
+          "anger": 0.6,
+          "disgust": 0.4482758620689655,
+          "fear": 0.46875,
+          "happiness": 0.6451612903225806,
+          "neutral": 0.36666666666666664,
+          "sadness": 0.4838709677419355,
+          "surprise": 0.7
+        }
+      },
+      "distances 3D | majority": {
+        "never_predicted": [
+          "anger",
+          "disgust",
+          "neutral",
+          "sadness",
+          "surprise"
+        ],
+        "per_class_recall_subject_wise": {
+          "anger": 0.0,
+          "disgust": 0.0,
+          "fear": 0.75,
+          "happiness": 0.22580645161290322,
+          "neutral": 0.0,
+          "sadness": 0.0,
+          "surprise": 0.0
+        }
+      },
+      "distances 3D | mlp": {
+        "never_predicted": [],
+        "per_class_recall_subject_wise": {
+          "anger": 0.6666666666666666,
+          "disgust": 0.5172413793103449,
+          "fear": 0.28125,
+          "happiness": 0.8064516129032258,
+          "neutral": 0.5333333333333333,
+          "sadness": 0.3548387096774194,
+          "surprise": 0.6333333333333333
+        }
+      }
+    },
+    "keep_fraction": 0.75,
+    "labels": [
+      "anger",
+      "disgust",
+      "fear",
+      "happiness",
+      "neutral",
+      "sadness",
+      "surprise"
+    ],
+    "n_rows": 213,
+    "n_splits": 10,
+    "n_subjects": 10,
+    "table": [
+      {
+        "accuracy": 0.14544325239977413,
+        "accuracy_std": 0.01118593876154859,
+        "macro_f1": 0.03625764895330112,
+        "macro_f1_ci95_over_subjects": [
+          0.035488935809569536,
+          0.06696740281478444
+        ],
+        "macro_f1_std": 0.002397548151466682,
+        "name": "distances 2D | majority | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.5731724073028421,
+        "accuracy_std": 0.2201235445120245,
+        "macro_f1": 0.5228349031920461,
+        "macro_f1_ci95_over_subjects": [
+          0.46311941133585377,
+          0.6998411021608731
+        ],
+        "macro_f1_std": 0.2532014419280634,
+        "name": "distances 2D | logreg | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.8638528138528139,
+        "accuracy_std": 0.06860292019106483,
+        "macro_f1": 0.8515192743764171,
+        "macro_f1_std": 0.08713947050061098,
+        "name": "distances 2D | logreg | random 10-fold (rows)"
+      },
+      {
+        "accuracy": 0.84375,
+        "macro_f1": 0.8527210884353742,
+        "name": "distances 2D | logreg | legacy thesis protocol"
+      },
+      {
+        "accuracy": 0.5323338979860719,
+        "accuracy_std": 0.18374348541397298,
+        "macro_f1": 0.47121933621933615,
+        "macro_f1_ci95_over_subjects": [
+          0.4355559595826707,
+          0.6242540781883549
+        ],
+        "macro_f1_std": 0.1910502083819479,
+        "name": "distances 2D | mlp | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.7274891774891775,
+        "accuracy_std": 0.11695190643169591,
+        "macro_f1": 0.7154648526077098,
+        "macro_f1_std": 0.12284057369184244,
+        "name": "distances 2D | mlp | random 10-fold (rows)"
+      },
+      {
+        "accuracy": 0.5625,
+        "macro_f1": 0.5560915275200989,
+        "name": "distances 2D | mlp | legacy thesis protocol"
+      },
+      {
+        "accuracy": 0.14544325239977413,
+        "accuracy_std": 0.01118593876154859,
+        "macro_f1": 0.03625764895330112,
+        "macro_f1_ci95_over_subjects": [
+          0.035488935809569536,
+          0.06696740281478444
+        ],
+        "macro_f1_std": 0.002397548151466682,
+        "name": "distances 3D | majority | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.5277856201769244,
+        "accuracy_std": 0.17081580790904227,
+        "macro_f1": 0.4587494997999199,
+        "macro_f1_ci95_over_subjects": [
+          0.43246804432755076,
+          0.645969541078986
+        ],
+        "macro_f1_std": 0.20149209470012008,
+        "name": "distances 3D | logreg | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.8638528138528139,
+        "accuracy_std": 0.06517072836763776,
+        "macro_f1": 0.8597165532879819,
+        "macro_f1_std": 0.06677744770780517,
+        "name": "distances 3D | logreg | random 10-fold (rows)"
+      },
+      {
+        "accuracy": 0.90625,
+        "macro_f1": 0.9098901098901099,
+        "name": "distances 3D | logreg | legacy thesis protocol"
+      },
+      {
+        "accuracy": 0.5355938264633917,
+        "accuracy_std": 0.1812614097349271,
+        "macro_f1": 0.46542449196584534,
+        "macro_f1_ci95_over_subjects": [
+          0.44428770980927274,
+          0.6227359470576636
+        ],
+        "macro_f1_std": 0.20397700006936237,
+        "name": "distances 3D | mlp | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.718181818181818,
+        "accuracy_std": 0.15193647186557901,
+        "macro_f1": 0.7049886621315193,
+        "macro_f1_std": 0.17072797125382927,
+        "name": "distances 3D | mlp | random 10-fold (rows)"
+      },
+      {
+        "accuracy": 0.59375,
+        "macro_f1": 0.5842871414299987,
+        "name": "distances 3D | mlp | legacy thesis protocol"
+      },
+      {
+        "accuracy": 0.14544325239977413,
+        "accuracy_std": 0.01118593876154859,
+        "macro_f1": 0.03625764895330112,
+        "macro_f1_ci95_over_subjects": [
+          0.035488935809569536,
+          0.06696740281478444
+        ],
+        "macro_f1_std": 0.002397548151466682,
+        "name": "distances 3D + blendshapes | majority | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.56894880481837,
+        "accuracy_std": 0.2051408208858652,
+        "macro_f1": 0.5094778937215912,
+        "macro_f1_ci95_over_subjects": [
+          0.4640185517073367,
+          0.7075865004508083
+        ],
+        "macro_f1_std": 0.24386754466508617,
+        "name": "distances 3D + blendshapes | logreg | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.8497835497835498,
+        "accuracy_std": 0.07003538787146256,
+        "macro_f1": 0.8429138321995465,
+        "macro_f1_std": 0.0738293125972754,
+        "name": "distances 3D + blendshapes | logreg | random 10-fold (rows)"
+      },
+      {
+        "accuracy": 0.875,
+        "macro_f1": 0.8804116518402233,
+        "name": "distances 3D + blendshapes | logreg | legacy thesis protocol"
+      },
+      {
+        "accuracy": 0.5544438170525127,
+        "accuracy_std": 0.16817150628322605,
+        "macro_f1": 0.4998602144820632,
+        "macro_f1_ci95_over_subjects": [
+          0.46885803166536677,
+          0.635772735195742
+        ],
+        "macro_f1_std": 0.17614633253201514,
+        "name": "distances 3D + blendshapes | mlp | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.6532467532467533,
+        "accuracy_std": 0.17009308736361925,
+        "macro_f1": 0.6416213151927438,
+        "macro_f1_std": 0.176940614612794,
+        "name": "distances 3D + blendshapes | mlp | random 10-fold (rows)"
+      },
+      {
+        "accuracy": 0.6875,
+        "macro_f1": 0.7145830360116074,
+        "name": "distances 3D + blendshapes | mlp | legacy thesis protocol"
+      },
+      {
+        "accuracy": 0.14544325239977413,
+        "accuracy_std": 0.01118593876154859,
+        "macro_f1": 0.03625764895330112,
+        "macro_f1_ci95_over_subjects": [
+          0.035488935809569536,
+          0.06696740281478444
+        ],
+        "macro_f1_std": 0.002397548151466682,
+        "name": "distances 3D + points + blendshapes | majority | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.5548390739695088,
+        "accuracy_std": 0.1886871284964753,
+        "macro_f1": 0.5023340548340548,
+        "macro_f1_ci95_over_subjects": [
+          0.4602599653589433,
+          0.6729356016792216
+        ],
+        "macro_f1_std": 0.2185205006085042,
+        "name": "distances 3D + points + blendshapes | logreg | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.8683982683982684,
+        "accuracy_std": 0.06283107332032138,
+        "macro_f1": 0.8641043083900227,
+        "macro_f1_std": 0.06594749060739058,
+        "name": "distances 3D + points + blendshapes | logreg | random 10-fold (rows)"
+      },
+      {
+        "accuracy": 0.84375,
+        "macro_f1": 0.8527210884353742,
+        "name": "distances 3D + points + blendshapes | logreg | legacy thesis protocol"
+      },
+      {
+        "accuracy": 0.5193440617353661,
+        "accuracy_std": 0.11261672043617578,
+        "macro_f1": 0.45795188938046083,
+        "macro_f1_ci95_over_subjects": [
+          0.45418738382309615,
+          0.5780541817962103
+        ],
+        "macro_f1_std": 0.12400897430134161,
+        "name": "distances 3D + points + blendshapes | mlp | subject-wise 10-fold"
+      },
+      {
+        "accuracy": 0.740909090909091,
+        "accuracy_std": 0.1615196642963414,
+        "macro_f1": 0.7151164708307567,
+        "macro_f1_std": 0.1849931229363177,
+        "name": "distances 3D + points + blendshapes | mlp | random 10-fold (rows)"
+      },
+      {
+        "accuracy": 0.8125,
+        "macro_f1": 0.8056689342403628,
+        "name": "distances 3D + points + blendshapes | mlp | legacy thesis protocol"
+      }
+    ]
+  },
+  "name": "study1_jaffe",
+  "protocol": {
+    "features": "pairwise distances of 40 selected landmarks, divided by inter-ocular distance; see docs/study1.md",
+    "selection": "Mutual Information, keep 0.75, fitted inside training folds",
+    "split": "subject-wise 10-fold, inner group-aware validation split"
+  },
+  "seed": 0,
+  "versions": {
+    "mediapipe": "1.2.2",
+    "numpy": "2.5.4",
+    "onnxruntime": "1.31.1",
+    "pandas": "3.1.1",
+    "python": "3.14.7",
+    "sklearn": "1.9.1",
+    "timm": "1.0.31",
+    "torch": "2.15.0"
+  },
+  "written_utc": "2026-11-11T18:13:23+00:00"
+}
