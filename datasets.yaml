@@ -61,7 +61,7 @@ datasets:
     role: used
     status: planned
     last_checked: 2026-11-08
-    notes: "Evaluation only. You download it yourself. No JAFFE images in the repo, README or demo, and no model weights trained on it. Cite the two articles named in the provider README."
+    notes: "Evaluation only: numbers from cross-validation or out-of-distribution tests are fine. You download it yourself. No JAFFE images in the repo, README or demo, and no trained model files built from it are published. Cite the two articles named in the provider README."
 
   - name: uibvfedplus_light
     title: UIBVFEDPlus-Light
@@ -74,8 +74,8 @@ datasets:
     fetch: runtime
     role: used
     status: planned
-    last_checked: 2026-11-08
-    notes: "CC BY 4.0 read on the project page and the university repository record. Confirm on the figshare record before release. Check whether a partial download is possible. Attribute the authors (Mascaro-Oliver et al., PLOS ONE 2023, doi 10.1371/journal.pone.0287006)."
+    last_checked: 2026-11-12
+    notes: "CC BY 4.0 read on the provider project page (2026-11-12). The 33.7 GB download is a SharePoint folder that also holds a lighting app, so the image part may be smaller. Check whether a partial download is possible. Attribute the authors (Mascaro-Oliver et al., PLOS ONE 2023, doi 10.1371/journal.pone.0287006)."
 
   - name: ckplus
     title: CK+ (Extended Cohn-Kanade)

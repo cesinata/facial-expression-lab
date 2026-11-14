@@ -53,6 +53,11 @@ class MutualInfoSelector(BaseEstimator, TransformerMixin):
             raise ValueError("keep_fraction must be in (0, 1]")
         if X.ndim != 2 or len(X) != len(y):
             raise ValueError("X must be 2D and match y in length")
+        if self.keep_fraction >= 1.0:  # keep everything: skip the slow estimate
+            self.scores_ = np.zeros(X.shape[1])
+            self.selected_ = np.arange(X.shape[1])
+            self.n_features_in_ = X.shape[1]
+            return self
         self.scores_ = mutual_info_classif(X, y, random_state=self.random_state)
         k = max(1, math.ceil(self.keep_fraction * X.shape[1]))
         order = np.argsort(-self.scores_, kind="stable")

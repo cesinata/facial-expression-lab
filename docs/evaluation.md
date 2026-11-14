@@ -25,3 +25,6 @@ Facts read from the thesis notebooks on 2026-11-08 (CK+, 8 classes, 348 test row
 - Each sequence contributes its first frame and last three frames.
 
 These are reported as "reported (thesis)" and are not reused as results.
+
+## Where old and corrected numbers appear
+The README table lists the thesis result with the label "reported (thesis)". The corrected result for the same pipeline comes from `scripts/run_study1.py`, which also reports the random-row and legacy protocols on the same features. For CK+ and KDEF the corrected numbers come from a run on the owner's machine and appear in `results/private/` as numbers only.
