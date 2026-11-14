@@ -44,7 +44,10 @@ python scripts/run_study1.py --features data/cache/kdef.npz --dataset kdef --lab
 These write to `results/private/`. Check that the JSON holds no file names before committing.
 
 ## 4. Study 3 (Colab GPU for training; notebooks 04 and 05 do this from Google Drive)
+Download the Kaggle zip and the FERPlus repository zip, then unpack them:
 ```bash
+python scripts/prepare_fer_data.py --kaggle-file fer2013.tar.gz --ferplus-zip FERPlus-master.zip --out-dir data/cache/fer_data
+# the printed paths are also in data/cache/fer_data/paths.json
 python scripts/study3.py train --fer-csv fer2013.csv --ferplus-csv fer2013new.csv
 # evaluation runs on the machine CPU, so the label says host CPU even in Colab
 python scripts/study3.py evaluate --fer-csv fer2013.csv --ferplus-csv fer2013new.csv --label "measured (host CPU)"
