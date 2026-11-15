@@ -19,7 +19,6 @@ from fel.data import load_registry, validate_registry  # noqa: E402
 
 START = "<!-- datasets:start -->"
 END = "<!-- datasets:end -->"
-TARGETS = ("README.md", "docs/data.md")
 
 
 def _role_text(e: dict) -> str:
@@ -68,6 +67,25 @@ def build_table(reg: dict) -> str:
     return "\n".join(rows)
 
 
+def build_short_table(reg: dict) -> str:
+    """README version: only the datasets this repo has used, then one line for the rest."""
+    used = [e for e in reg.values() if e["role"] == "used" and e["status"] == "done"]
+    rest = [e["title"] for e in reg.values() if e not in used]
+    rows = ["| Dataset | Licence status | In this repo |", "|---|---|---|"]
+    for e in used:
+        title = _cell(e["title"])
+        if e.get("source_url"):
+            title = f"[{title}]({e['source_url']})"
+        rows.append(f"| {title} | {e['licence_status'].replace('_', ' ')} | {_role_text(e)} |")
+    if rest:
+        rows += ["", f"Planned, private or not used ({len(rest)}): {', '.join(rest)}. "
+                     "Terms and status for all of them: [`docs/data.md`](docs/data.md)."]
+    return "\n".join(rows)
+
+
+TARGETS = {"docs/data.md": build_table, "README.md": build_short_table}
+
+
 def replace_block(text: str, table: str) -> str:
     if START not in text or END not in text:
         raise ValueError(f"markers {START} / {END} not found")
@@ -85,12 +103,11 @@ def main() -> int:
     if problems:
         print("datasets.yaml problems:\n  " + "\n  ".join(problems))
         return 1
-    table = build_table(reg)
     stale = []
-    for rel in TARGETS:
+    for rel, builder in TARGETS.items():
         path = ROOT / rel
         old = path.read_text(encoding="utf-8")
-        new = replace_block(old, table)
+        new = replace_block(old, builder(reg))
         if new != old:
             stale.append(rel)
             if not args.check:
