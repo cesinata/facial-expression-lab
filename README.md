@@ -4,7 +4,7 @@ Three small facial expression studies, a browser emoji demo (emoji mirror), and 
 
 ## Why this repo exists
 
-It is 2026 and I am refreshing my computer vision skills. I combined my bachelor thesis project with a modern small-model study and a browser demo (emoji mirror) to practise evaluation, deployment and honest reporting end to end.
+It is 2026 and I am refreshing my computer vision skills. I combined my bachelor thesis project with a modern small-model study and a browser demo (emoji mirror) to practise evaluation, deployment and honest reporting end to end. What each part shows, topic by topic, is in the [computer vision refresher map](docs/learning.md).
 
 ## What my bachelor thesis did
 
