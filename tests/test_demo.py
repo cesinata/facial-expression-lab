@@ -47,3 +47,15 @@ def test_demo_model_input_name_matches_the_export():
     src = (ROOT / "src" / "fel" / "train_fer.py").read_text()
     assert 'input_names=["input"]' in src and "session.run({ input:" in js
     assert 'output_names=["logits"]' in src and "out.logits" in js
+
+
+def test_demo_uses_one_version_of_each_cdn_library():
+    text = (ROOT / "demo" / "app.js").read_text() + (ROOT / "demo" / "index.html").read_text()
+    for lib in ("onnxruntime-web", "@mediapipe/tasks-vision"):
+        versions = set(re.findall(re.escape(lib) + r"@(\d+\.\d+\.\d+)/", text))
+        assert len(versions) == 1, f"{lib} pinned to several versions: {versions}"
+
+
+def test_demo_page_says_where_the_model_comes_from():
+    html = (ROOT / "demo" / "index.html").read_text()
+    assert "GitHub release" in html and "FP32" in html

@@ -2,6 +2,8 @@
 
 Three small facial expression studies, a browser emoji demo (emoji mirror), and a corrected evaluation of my bachelor thesis results.
 
+Live demo: https://cesinata.github.io/facial-expression-lab/ (live after Pages is enabled). Learning notes: [computer vision refresher map](docs/learning.md).
+
 ## Why this repo exists
 
 It is 2026 and I am refreshing my computer vision skills. I combined my bachelor thesis project with a modern small-model study and a browser demo (emoji mirror) to practise evaluation, deployment and honest reporting end to end. What each part shows, topic by topic, is in the [computer vision refresher map](docs/learning.md).
@@ -34,7 +36,8 @@ Also: `notebooks/01_evaluation_leakage_demo.ipynb` shows, on simulated data, how
 | Blocked | KDEF: the actor folders in my copy are empty. |
 | To do | Deploy the demo: enable GitHub Pages and create a release with `model.onnx`. |
 | To do | Browser latency (not measured). |
-| To do | Verify the CDN versions in the demo and the GitHub Actions versions in the workflows. |
+| Done | CDN versions in the demo and GitHub Actions versions in the workflows checked and updated on 2026-11-15 (see [`docs/decisions.md`](docs/decisions.md)). |
+| To do | Check that the demo loads with the new CDN versions once it is deployed (not yet run in a browser). |
 
 ## Results
 
@@ -154,7 +157,9 @@ For the real-data studies, follow `docs/reproduce.md`.
 
 ## Demo
 
-Written but not deployed yet: GitHub Pages is not enabled and no release with `model.onnx` exists. Browser latency is not measured. See `demo/README.md`.
+Live page: https://cesinata.github.io/facial-expression-lab/ (live after Pages is enabled). It is not deployed yet: GitHub Pages is not enabled and no release with `model.onnx` exists.
+
+The page runs the FP32 `model.onnx` (6.12 MB) from the GitHub release; the INT8 file failed its test and is not published. The weakest classes on FER2013 PrivateTest are contempt, fear and neutral (recall 0.481, 0.516 and 0.599, measured (host CPU)). Browser latency is not measured. See [`demo/README.md`](demo/README.md), [`docs/release_notes.md`](docs/release_notes.md) and the [computer vision refresher map](docs/learning.md).
 
 ## Evaluation rules used here
 

@@ -1,7 +1,7 @@
 // Webcam -> MediaPipe Face Landmarker (face box) -> 48x48 grey crop -> ONNX model in the browser.
-// Library versions are pinned. Check them before release (see docs/decisions.md).
+// Library versions are pinned to exact releases, last checked 2026-11-15 (see docs/decisions.md).
 import { FaceLandmarker, FilesetResolver } from
-  "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs";
+  "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.0/vision_bundle.mjs";
 
 const CLASSES = ["neutral", "happiness", "surprise", "sadness", "anger", "disgust", "fear", "contempt"];
 // One emoji per class, keyed by class name. A test keeps these keys equal to CLASSES.
@@ -12,7 +12,7 @@ const EMOJI = {
 const NO_FACE = "\u2754";
 const LANDMARKER_MODEL =
   "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task";
-const WASM_DIR = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm";
+const WASM_DIR = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.0/wasm";
 const MODEL_URL = "model.onnx";
 const MARGIN = 0.1; // keep equal to fel.landmarks.face_box
 
@@ -41,13 +41,13 @@ function softmax(v) {
 
 async function init() {
   setStatus("Loading models...");
-  ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/";
+  ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.1/dist/";
   ort.env.wasm.numThreads = 1; // GitHub Pages cannot set the headers that threads need
   try {
     session = await ort.InferenceSession.create(MODEL_URL, { executionProviders: ["wasm"] });
   } catch (err) {
-    $("notice").textContent = "No model file is published with this page yet (model.onnx). " +
-      "The camera will start, but there is nothing to run.";
+    $("notice").textContent = "No model file found (model.onnx). It comes from the repository's " +
+      "GitHub release, and no release has been found yet. The camera will start, but there is nothing to run.";
     console.warn(err);
   }
   const fileset = await FilesetResolver.forVisionTasks(WASM_DIR);
