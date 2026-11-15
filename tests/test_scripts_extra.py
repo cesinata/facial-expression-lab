@@ -77,3 +77,25 @@ def test_repo_notebooks_are_in_sync_and_stripped():
     assert len(pys) >= 5
     for py in pys:
         assert nbtools.check_pair(py) == [], py.name
+
+
+def _study3_file(tmp_path, int8_accuracy):
+    rows = [{"name": "PyTorch FP32", "accuracy": 0.70, "macro_f1": 0.57},
+            {"name": "ONNX FP32", "accuracy": 0.70, "macro_f1": 0.57},
+            {"name": "ONNX INT8", "accuracy": int8_accuracy, "macro_f1": 0.04}]
+    write_result(tmp_path / "study3_ferplus.json", "study3", "measured (host CPU)", "ferplus",
+                 {}, {"table": rows, "extra": {}}, seed=0)
+
+
+def test_results_table_notes_flag_a_broken_int8_row_only_when_the_data_shows_it(tmp_path):
+    mod = _load("make_results_table")
+    assert mod.notes_from(tmp_path) == []
+    _study3_file(tmp_path, 0.05)
+    notes = mod.notes_from(tmp_path)
+    assert any("no subject IDs" in n for n in notes)
+    assert any("INT8" in n and "failure" in n for n in notes)
+    _study3_file(tmp_path, 0.69)
+    notes = mod.notes_from(tmp_path)
+    assert any("no subject IDs" in n for n in notes)
+    assert not any("INT8" in n for n in notes)
+    assert "Note: " in mod.build(tmp_path)

@@ -25,3 +25,6 @@ Defaults chosen where the project brief left a choice. Change one by editing thi
 | 2026-11-11 | GitHub Actions versions (checkout v4, setup-python v5, configure-pages v5, upload-pages-artifact v3, deploy-pages v4) are major tags from memory. | No network when written. Check before release. |
 | 2026-11-14 | FER+ licence read from the repository LICENSE.md: MIT. FER2013 images keep the Kaggle terms, which are still unread. | Recorded in `datasets.yaml`. |
 | 2026-11-11 | Latency is measured one sample at a time and labelled with where it ran. | Batch throughput and single-sample latency differ. |
+| 2026-11-15 | The published model is the 40-epoch run, chosen by macro F1 on PublicTest (0.590 against 0.515 for 15 epochs). | PrivateTest was read once, after this choice. |
+| 2026-11-15 | `model_int8.onnx` is not published. The INT8 row stays in the results as a measured failure (accuracy 0.047). | Dynamic quantisation damaged the model. |
+| 2026-11-15 | The model card is checked against `results/*.json` by `tests/test_model_card.py`. The results table adds notes only when the files show the condition. | Keeps hand-written numbers from drifting from the measured ones. |
