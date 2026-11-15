@@ -9,4 +9,4 @@ The research placement analysed student expression data from an e-learning platf
 k-NN (k=9), logistic regression and a linear SVM, each with no fix, class weights (where supported) or oversampling of training rows only. Evaluation is user-grouped 5-fold. The tables report accuracy and macro F1, next to the accuracy of always predicting the majority class.
 
 ## Reported numbers from the original work
-Accuracy 0.914, 0.922 and 0.921 and macro F1 0.250, 0.272 and 0.243 (k-NN, logistic regression, linear SVM), as reported in the research report and conference paper. They are listed in the README with the label "reported (paper)". The simulated study does not reproduce them and does not claim to.
+Accuracy 0.914, 0.922 and 0.921 and macro F1 0.250, 0.272 and 0.243 (k-NN, logistic regression, linear SVM), as reported in the research report and conference paper. They are listed in `docs/results.md` with the label "reported (paper)". The simulated study does not reproduce them and does not claim to.

@@ -41,10 +41,21 @@ def test_results_table_shows_values_and_not_measured(tmp_path):
     assert "reported (thesis)" in table and "reported (paper)" in table
 
 
-def test_results_table_in_readme_is_up_to_date():
+def test_results_tables_in_readme_and_docs_are_up_to_date():
     mod = _load("make_results_table")
-    text = (ROOT / "README.md").read_text(encoding="utf-8")
-    assert mod.replace_block(text, mod.build(ROOT / "results")) == text
+    assert set(mod.TARGETS) == {"README.md", "docs/results.md"}
+    for rel, builder in mod.TARGETS.items():
+        text = (ROOT / rel).read_text(encoding="utf-8")
+        assert mod.replace_block(text, builder(ROOT / "results")) == text, f"{rel} is out of date"
+
+
+def test_headline_rows_exist_in_the_result_files_and_missing_files_are_listed(tmp_path):
+    mod = _load("make_results_table")
+    full = mod.build_headline(ROOT / "results")
+    assert len(mod.headline_rows(ROOT / "results")) == len(mod.HEADLINE)
+    assert "reported (thesis)" in full
+    empty = mod.build_headline(tmp_path)
+    assert "Not measured yet:" in empty and "Study 3: FER2013 with FER+ labels" in empty
 
 
 def test_percent_notebook_parsing_and_roundtrip():

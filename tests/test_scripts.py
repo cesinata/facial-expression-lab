@@ -39,10 +39,20 @@ def test_registry_check_reads_notebooks(tmp_path):
 
 def test_dataset_tables_in_repo_are_up_to_date():
     mod = _load("make_dataset_table")
-    table = mod.build_table(load_registry())
-    for rel in mod.TARGETS:
+    reg = load_registry()
+    assert set(mod.TARGETS) == {"README.md", "docs/data.md"}
+    for rel, builder in mod.TARGETS.items():
         text = (ROOT / rel).read_text(encoding="utf-8")
-        assert mod.replace_block(text, table) == text, f"{rel} is out of date"
+        assert mod.replace_block(text, builder(reg)) == text, f"{rel} is out of date"
+
+
+def test_short_dataset_table_lists_used_datasets_and_names_the_rest():
+    mod = _load("make_dataset_table")
+    reg = load_registry()
+    short = mod.build_short_table(reg)
+    for e in reg.values():
+        assert e["title"] in short, f"{e['title']} missing from the README dataset summary"
+    assert "docs/data.md" in short
 
 
 def test_table_marks_jaffe_as_user_supplied_and_private_as_private():
