@@ -20,6 +20,8 @@
   .warn { color: var(--warn); }
   #mirror { font-size: 6rem; text-align: center; line-height: 1.1; margin: .5rem 0; }
   .center { text-align: center; }
+  footer { margin-top: 2rem; border-top: 1px solid var(--track); padding-top: .75rem; }
+  a { color: var(--bar); }
 </style>
 </head>
 <body>
@@ -45,7 +47,24 @@ Read the model card and the evaluation notes in the repository before drawing co
 <span id="latency">n/a</span></p>
 <p class="muted warn" id="notice"></p>
 
-<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.30.0/dist/ort.min.js"></script>
+<h2>About the model</h2>
+<p class="muted">The model file, <code>model.onnx</code>, comes from the repository's GitHub release. Only the
+FP32 file is published: the INT8 version failed its test (accuracy 0.047 against 0.705 for FP32), so it is
+not used. The model is a MobileNetV3-small trained on FER2013 with FER+ labels.</p>
+<p class="muted">Weakest classes on the FER2013 PrivateTest split, by recall: contempt (0.481), fear (0.516)
+and neutral (0.599). Expect these three to be wrong more often. All numbers: measured (host CPU), from
+<code>results/study3_ferplus.json</code>. FER2013 has no subject IDs, so they are optimistic. On JAFFE, which
+the model was not trained on, accuracy was 0.380 (measured (host CPU), <code>results/study3_ood_jaffe.json</code>).</p>
+
+<footer class="muted">
+  <a href="https://github.com/cesinata/facial-expression-lab">Repository</a> ·
+  <a href="https://github.com/cesinata/facial-expression-lab/blob/main/docs/model_card.md">Model card</a> ·
+  <a href="https://github.com/cesinata/facial-expression-lab/blob/main/docs/learning.md">Computer vision refresher map</a><br>
+  This page: <a href="https://cesinata.github.io/facial-expression-lab/">cesinata.github.io/facial-expression-lab</a>
+  (live after Pages is enabled)
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.1/dist/ort.min.js"></script>
 <script type="module" src="app.js"></script>
 </body>
 </html>
