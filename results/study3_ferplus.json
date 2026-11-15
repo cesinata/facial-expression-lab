@@ -1,0 +1,73 @@
+{
+  "dataset": "ferplus",
+  "label": "measured (host CPU)",
+  "metrics": {
+    "extra": {
+      "best_epoch": 34,
+      "ece_after": 0.23178511362629936,
+      "ece_before": 0.28820384609801997,
+      "latency_onnx_fp32": {
+        "median_ms": 1.2707735000105913,
+        "n_runs": 200,
+        "p95_ms": 1.609298749968957
+      },
+      "latency_onnx_int8": {
+        "median_ms": 11.424032500002568,
+        "n_runs": 200,
+        "p95_ms": 15.146490850023033
+      },
+      "max_abs_logit_diff_pytorch_vs_onnx": 2.1457672119140625e-05,
+      "n_test": 3395,
+      "never_predicted": [],
+      "per_class_recall": {
+        "anger": 0.7563291139240507,
+        "contempt": 0.48148148148148145,
+        "disgust": 0.6086956521739131,
+        "fear": 0.5161290322580645,
+        "happiness": 0.8197802197802198,
+        "neutral": 0.5994876174210076,
+        "sadness": 0.6223776223776224,
+        "surprise": 0.8544600938967136
+      },
+      "size_mb": {
+        "onnx_fp32": 6.117108,
+        "onnx_int8": 1.708543
+      },
+      "temperature": 0.758874849261494
+    },
+    "table": [
+      {
+        "accuracy": 0.704860088365243,
+        "macro_f1": 0.5712681830703953,
+        "name": "PyTorch FP32"
+      },
+      {
+        "accuracy": 0.704860088365243,
+        "macro_f1": 0.5712681830703953,
+        "name": "ONNX FP32"
+      },
+      {
+        "accuracy": 0.04683357879234168,
+        "macro_f1": 0.03677556500088522,
+        "name": "ONNX INT8"
+      }
+    ]
+  },
+  "name": "study3",
+  "protocol": {
+    "labels": "FER+ majority vote, unknown/NF dropped",
+    "model": "mobilenetv3_small_100",
+    "split": "FER2013 Usage split; PrivateTest read once; no subject IDs, so results are optimistic"
+  },
+  "seed": 0,
+  "versions": {
+    "numpy": "2.4.6",
+    "onnxruntime": "1.32.0",
+    "pandas": "2.2.3",
+    "python": "3.13.18",
+    "sklearn": "1.6.1",
+    "timm": "1.0.31",
+    "torch": "2.14.1+cpu"
+  },
+  "written_utc": "2026-11-14T04:46:00+00:00"
+}

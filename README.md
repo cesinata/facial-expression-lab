@@ -43,9 +43,11 @@ Every row comes from a file in `results/` or is an old number with its own label
 | class imbalance: linear_svc / class_weight | synthetic | 0.843 ± 0.028 | 0.234 ± 0.013 | simulated |
 | class imbalance: linear_svc / oversample | synthetic | 0.790 ± 0.042 | 0.231 ± 0.014 | simulated |
 | Study 1: UIBVFEDPlus-Light | n/a | not measured | not measured | not measured |
-| Study 3: FER2013 with FER+ labels | n/a | not measured | not measured | not measured |
+| study3: PyTorch FP32 | ferplus | 0.705 | 0.571 | measured (host CPU) |
+| study3: ONNX FP32 | ferplus | 0.705 | 0.571 | measured (host CPU) |
+| study3: ONNX INT8 | ferplus | 0.047 | 0.037 | measured (host CPU) |
 | Study 3: out-of-distribution, UIBVFEDPlus-Light | n/a | not measured | not measured | not measured |
-| Study 3: out-of-distribution, JAFFE (you supply the data) | n/a | not measured | not measured | not measured |
+| study3 out-of-distribution: restricted to 7 shared classes | jaffe | 0.380 | 0.314 | measured (host CPU) |
 | Study 1: CK+ (private data, numbers only) | n/a | not measured | not measured | not measured |
 | Study 1: KDEF (private data, numbers only) | n/a | not measured | not measured | not measured |
 | study1_jaffe: distances 2D | majority | subject-wise 10-fold | jaffe | 0.145 ± 0.011 | 0.036 ± 0.002 | measured (local machine) |
@@ -76,6 +78,9 @@ Every row comes from a file in `results/` or is an old number with its own label
 | study1_jaffe: distances 3D + points + blendshapes | mlp | subject-wise 10-fold | jaffe | 0.519 ± 0.113 | 0.458 ± 0.124 | measured (local machine) |
 | study1_jaffe: distances 3D + points + blendshapes | mlp | random 10-fold (rows) | jaffe | 0.741 ± 0.162 | 0.715 ± 0.185 | measured (local machine) |
 | study1_jaffe: distances 3D + points + blendshapes | mlp | legacy thesis protocol | jaffe | 0.812 | 0.806 | measured (local machine) |
+
+Note: Study 3 uses FER2013, which has no subject IDs, so the same person can be in several splits and its numbers are optimistic.
+Note: The ONNX INT8 row is a measured failure: dynamic quantisation damaged the model, so it is not published and the demo uses the FP32 file.
 <!-- results:end -->
 
 The first two rows are old numbers kept for comparison. `docs/evaluation.md` explains why the thesis number should not be read as a held-out result.

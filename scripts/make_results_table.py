@@ -56,6 +56,22 @@ def rows_from(path: Path) -> list[str]:
     return out
 
 
+def notes_from(results_dir: Path) -> list[str]:
+    """Plain-language notes, written only when the result files show the condition."""
+    notes = []
+    p = results_dir / "study3_ferplus.json"
+    if p.exists():
+        rec = json.loads(p.read_text(encoding="utf-8"))
+        rows = {r["name"]: r for r in rec.get("metrics", {}).get("table", [])}
+        notes.append("Study 3 uses FER2013, which has no subject IDs, so the same person can be "
+                     "in several splits and its numbers are optimistic.")
+        fp32, int8 = rows.get("ONNX FP32"), rows.get("ONNX INT8")
+        if fp32 and int8 and int8["accuracy"] < 0.5 * fp32["accuracy"]:
+            notes.append("The ONNX INT8 row is a measured failure: dynamic quantisation damaged "
+                         "the model, so it is not published and the demo uses the FP32 file.")
+    return notes
+
+
 def build(results_dir: Path) -> str:
     lines = ["| Result | Data | Accuracy | Macro F1 | Label |", "|---|---|---|---|---|"]
     for what, acc, f1, label in REPORTED:
@@ -69,6 +85,9 @@ def build(results_dir: Path) -> str:
     for p in sorted(results_dir.glob("*.json")):
         if p.name not in EXPECTED:
             lines += rows_from(p)
+    notes = notes_from(results_dir)
+    if notes:
+        lines += [""] + [f"Note: {n}" for n in notes]
     return "\n".join(lines)
 
 
