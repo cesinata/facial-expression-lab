@@ -34,7 +34,7 @@ Code: `export_onnx` and `quantize_int8` in [`src/fel/train_fer.py`](../src/fel/t
 
 ## Browser deployment
 
-The demo is a static page: webcam, MediaPipe Face Landmarker for the face box (10% margin, kept equal to the Python code by a test), a 48x48 grey crop drawn with the browser canvas, then the ONNX model in ONNX Runtime Web on a single wasm thread ([`demo/app.js`](../demo/app.js)). The emoji mirror shows the class with the highest smoothed probability; the smoothing default was not tuned. Nothing leaves the browser. The canvas resize differs from the Pillow resize used in Python, and the size of that difference has not been measured. The page is not deployed yet and browser latency is not measured.
+The demo is a static page: webcam, MediaPipe Face Landmarker for the face box (10% margin, kept equal to the Python code by a test), a 48x48 grey crop drawn with the browser canvas, then the ONNX model in ONNX Runtime Web on a single wasm thread ([`demo/app.js`](../demo/app.js)). The emoji mirror shows the class with the highest smoothed probability; the smoothing default was not tuned. Nothing leaves the browser. The canvas resize differs from the Pillow resize used in Python, and the size of that difference has not been measured. The page is live on GitHub Pages; one browser reading gave a median model time of 3.2 ms over 30 frames in Chrome on a MacBook (measured (browser), [`results/study3_browser_latency.json`](../results/study3_browser_latency.json)), against 1.27 ms on the Colab CPU (measured (host CPU)). The two numbers come from different machines and runtimes, so the gap says little on its own.
 
 Tests: [`tests/test_demo.py`](../tests/test_demo.py). Notes: [`demo/README.md`](../demo/README.md).
 

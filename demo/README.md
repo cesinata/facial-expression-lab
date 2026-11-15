@@ -3,12 +3,12 @@
 A static page: webcam, MediaPipe Face Landmarker (finds the face box), then the ONNX model from
 Study 3. Nothing is uploaded.
 
-Live page: https://cesinata.github.io/facial-expression-lab/ (live after Pages is enabled).
+Live page: https://cesinata.github.io/facial-expression-lab/ (deployed 2026-11-15).
 
 ## Where `model.onnx` comes from
 
 The model file is not in git. It is published only as an attachment to the repository's GitHub
-release, and only the FP32 file is published (6.12 MB). The Pages workflow
+release (v1.0.0), and only the FP32 file is published (6.12 MB). The Pages workflow
 (`.github/workflows/pages.yml`) downloads `model.onnx` from the latest release on each run and
 copies it next to the page. If no release exists, the page loads, says that no model file was
 found, and runs nothing. The INT8 file is not published: it failed on PrivateTest (accuracy 0.047
@@ -42,13 +42,19 @@ probability bars stay on the page. The mirror is for fun and says nothing about 
 
 Pinned exact versions, checked on 2026-11-15 (details in `docs/decisions.md`):
 onnxruntime-web 1.31.1 and @mediapipe/tasks-vision 1.2.0, both from cdn.jsdelivr.net. The
-MediaPipe face model is loaded from Google's model storage. Neither version has been run in a
-browser by me yet.
+MediaPipe face model is loaded from Google's model storage. Both versions loaded and ran in Chrome
+on a MacBook on 2026-11-15. Other browsers and phones have not been checked.
 
-## Not measured
+## Browser latency
 
-Browser latency. The page shows a live median for your device. A number goes in the README only
-after you measure it and commit the result (label: measured (browser)).
+Recorded so far: median 3.2 ms over 30 frames, Chrome (version not recorded) on a MacBook, 2026-11-15
+(measured (browser), `results/study3_browser_latency.json`). It was read from the page's live median
+line, so it is one reading with no 95th percentile.
+
+To record a better measurement, press "Measure model time" while a face is found. It runs the model
+200 times on the current crop after 20 warm-up runs, one call at a time, and prints the median, the
+95th percentile and a command for `scripts/record_browser_latency.py`. Fill in the browser and
+device, run the command in the repository, then run `python scripts/make_results_table.py`.
 
 ## Limits
 

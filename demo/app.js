@@ -14,6 +14,7 @@ const LANDMARKER_MODEL =
   "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task";
 const WASM_DIR = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@1.2.0/wasm";
 const MODEL_URL = "model.onnx";
+const ORT_WASM = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.1/dist/";
 const MARGIN = 0.1; // keep equal to fel.landmarks.face_box
 
 const $ = (id) => document.getElementById(id);
@@ -41,7 +42,7 @@ function softmax(v) {
 
 async function init() {
   setStatus("Loading models...");
-  ort.env.wasm.wasmPaths = "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.1/dist/";
+  ort.env.wasm.wasmPaths = ORT_WASM;
   ort.env.wasm.numThreads = 1; // GitHub Pages cannot set the headers that threads need
   try {
     session = await ort.InferenceSession.create(MODEL_URL, { executionProviders: ["wasm"] });
@@ -113,6 +114,7 @@ async function loop() {
       show(probs);
       updateMirror(probs);
       setStatus("Face found.");
+      $("bench").disabled = false;
     } else if (session) {
       updateMirror(null);
       setStatus("No face found.");
@@ -135,3 +137,38 @@ $("start").addEventListener("click", async () => {
     $("start").disabled = false;
   }
 });
+
+// Benchmark for recording browser latency: 20 warm-up runs, then 200 timed runs of
+// session.run on the current crop, one call at a time. The live loop pauses meanwhile.
+$("bench").addEventListener("click", async () => {
+  if (!session) return;
+  const wasRunning = running;
+  running = false;
+  $("bench").disabled = true;
+  setStatus("Measuring model time...");
+  await new Promise((r) => setTimeout(r, 250)); // let an in-flight live-loop run finish
+  const input = cropToTensor();
+  for (let i = 0; i < 20; i++) await session.run({ input });
+  const t = [];
+  for (let i = 0; i < 200; i++) {
+    const t0 = performance.now();
+    await session.run({ input });
+    t.push(performance.now() - t0);
+  }
+  t.sort((a, b) => a - b);
+  const median = t[100].toFixed(2), p95 = t[Math.ceil(0.95 * t.length) - 1].toFixed(2);
+  const ort_web = (ORT_WASM.match(/onnxruntime-web@([\d.]+)/) || [])[1] || "";
+  const date = new Date().toISOString().slice(0, 10);
+  $("benchout").hidden = false;
+  $("benchout").textContent =
+    `Median ${median} ms, 95th percentile ${p95} ms, 200 runs (measured (browser)).\n` +
+    `Browser: ${navigator.userAgent}\n\n` +
+    `To record it, fill in the browser and device, then run in the repository:\n` +
+    `python scripts/record_browser_latency.py --median-ms ${median} --p95-ms ${p95} --n-runs 200 ` +
+    `--method "Measure model time button, 200 runs after 20 warm-up" --browser "BROWSER AND VERSION" ` +
+    `--device "DEVICE" --date ${date} --ort-web ${ort_web}`;
+  $("bench").disabled = false;
+  setStatus("Measured.");
+  if (wasRunning) { running = true; requestAnimationFrame(loop); }
+});
+

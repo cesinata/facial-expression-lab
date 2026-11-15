@@ -12,7 +12,7 @@ Text for the GitHub release that carries `model.onnx`. Paste everything below th
 - MobileNetV3-small (timm `mobilenetv3_small_100.lamb_in1k`, ImageNet-pretrained), fine-tuned on the FER2013 Training split with FER+ majority-vote labels. 40-epoch run, best epoch 34, chosen by macro F1 on PublicTest before PrivateTest was read.
 - Input `input`: float32, shape (batch, 1, 48, 48), a grey face crop scaled to 0..1. Normalisation and resizing to 96x96 happen inside the model.
 - Output `logits`: 8 classes in this order: neutral, happiness, surprise, sadness, anger, disgust, fear, contempt. Apply softmax yourself.
-- Used by the browser demo: https://cesinata.github.io/facial-expression-lab/ (live after Pages is enabled). The Pages workflow downloads this file from the latest release.
+- Used by the browser demo: https://cesinata.github.io/facial-expression-lab/. The Pages workflow downloads this file from the latest release.
 
 ### PrivateTest results
 
@@ -29,7 +29,7 @@ Per-class recall: anger 0.756, contempt 0.481, disgust 0.609, fear 0.516, happin
 
 Calibration: expected calibration error 0.288 without temperature scaling, 0.232 with temperature 0.759 (fitted on PublicTest). The demo applies no temperature, so its percentages are not probabilities.
 
-Single-sample latency on the Colab virtual machine's CPU: median 1.27 ms, 95th percentile 1.61 ms (measured (host CPU)). Browser latency: not measured.
+Single-sample latency on the Colab virtual machine's CPU: median 1.27 ms, 95th percentile 1.61 ms (measured (host CPU)). Browser latency: median 3.2 ms over 30 frames, Chrome on a MacBook, 2026-11-15 (measured (browser), one reading, `results/study3_browser_latency.json`).
 
 Out of distribution: on JAFFE (not trained on, 7 shared classes), accuracy 0.380 and macro F1 0.314 (measured (host CPU), `results/study3_ood_jaffe.json`).
 
