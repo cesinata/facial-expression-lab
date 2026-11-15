@@ -11,8 +11,8 @@ jobs:
       matrix:
         python-version: ["3.10", "3.12"]
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install
@@ -35,8 +35,8 @@ jobs:
   torch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Install (CPU PyTorch)
@@ -50,7 +50,7 @@ jobs:
   hygiene:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: No images, archives, model files or private data are tracked
         run: |
           bad=$(git ls-files | grep -E '\.(png|jpe?g|gif|bmp|zip|tar|gz|pt|pth|onnx|task|h5|ckpt|safetensors)$|^data/private/[^R]|^data/raw/|^data/cache/|^private/' || true)
