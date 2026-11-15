@@ -1,0 +1,42 @@
+{
+  "dataset": "ferplus",
+  "label": "measured (browser)",
+  "metrics": {
+    "extra": {
+      "latency_browser": {
+        "browser": "Chrome (version not recorded)",
+        "date": "2026-11-15",
+        "device": "MacBook (macOS)",
+        "median_ms": 3.2,
+        "method": "live loop, median of the last 30 frames, read from a screenshot of the page",
+        "n_runs": 30,
+        "onnxruntime_web": "1.31.1",
+        "p95_ms": null
+      }
+    },
+    "table": [
+      {
+        "name": "ONNX FP32 in the browser, median 3.2 ms over 30 runs, Chrome (version not recorded), MacBook (macOS), 2026-11-15"
+      }
+    ]
+  },
+  "name": "study3_browser_latency",
+  "protocol": {
+    "input": "48x48 grey crop from the live webcam via the demo page",
+    "method": "live loop, median of the last 30 frames, read from a screenshot of the page",
+    "model": "model.onnx (FP32) from release v1.0.0",
+    "timing": "performance.now() around session.run only, one call at a time"
+  },
+  "seed": 0,
+  "versions": {
+    "mediapipe": "1.2.2",
+    "numpy": "2.5.4",
+    "onnxruntime": "1.31.1",
+    "pandas": "3.1.1",
+    "python": "3.14.7",
+    "sklearn": "1.9.1",
+    "timm": "1.0.31",
+    "torch": "2.15.0"
+  },
+  "written_utc": "2026-11-15T12:12:17+00:00"
+}

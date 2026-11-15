@@ -33,6 +33,7 @@ EXPECTED = {  # file name -> description shown when the file does not exist yet
     "study3_ferplus.json": "Study 3: FER2013 with FER+ labels",
     "study3_ood_uibvfedplus_light.json": "Study 3: out-of-distribution, UIBVFEDPlus-Light",
     "study3_ood_jaffe.json": "Study 3: out-of-distribution, JAFFE (you supply the data)",
+    "study3_browser_latency.json": "Study 3: browser latency",
     "private/study1_ckplus.json": "Study 1: CK+ (private data, numbers only)",
     "private/study1_kdef.json": "Study 1: KDEF (private data, numbers only)",
 }
@@ -69,6 +70,12 @@ def notes_from(results_dir: Path) -> list[str]:
         if fp32 and int8 and int8["accuracy"] < 0.5 * fp32["accuracy"]:
             notes.append("The ONNX INT8 row is a measured failure: dynamic quantisation damaged "
                          "the model, so it is not published and the demo uses the FP32 file.")
+    p = results_dir / "study3_browser_latency.json"
+    if p.exists():
+        lat = json.loads(p.read_text(encoding="utf-8"))["metrics"]["extra"]["latency_browser"]
+        notes.append(f"The browser latency row has no accuracy: it is the model time in the demo "
+                     f"page, median {lat['median_ms']:g} ms over {lat['n_runs']} runs, "
+                     f"{lat['browser']}, {lat['device']}, {lat['date']} (measured (browser)).")
     return notes
 
 
