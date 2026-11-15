@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-"""Fill the results table in README.md from results/*.json (and results/private/*.json).
+"""Fill the results tables from results/*.json (and results/private/*.json).
 
-    python scripts/make_results_table.py           # rewrite the table
-    python scripts/make_results_table.py --check   # exit 1 if README is out of date (CI)
+    python scripts/make_results_table.py           # rewrite both tables
+    python scripts/make_results_table.py --check   # exit 1 if either is out of date (CI)
 
+docs/results.md gets the full table. README.md gets a short headline table: a fixed list of rows
+picked by name from the same files, plus one line naming the results that are not measured.
 Nothing is typed by hand: a number appears only if a result file holds it. Expected results
-that have no file yet show "not measured". Reported numbers from older work are listed with
-their own label.
+that have no file yet show "not measured". Reported numbers from older work keep their label.
 """
 
 from __future__ import annotations
@@ -98,9 +99,73 @@ def build(results_dir: Path) -> str:
     return "\n".join(lines)
 
 
+# Headline rows for README.md: (file, row name in the file, text shown). The text names the row;
+# every number comes from the file. A file that does not exist simply drops its rows.
+HEADLINE = [
+    ("study1_jaffe.json", "distances 2D | logreg | random 10-fold (rows)",
+     "Study 1, JAFFE, logistic regression on 2D distances: random split of rows"),
+    ("study1_jaffe.json", "distances 2D | logreg | legacy thesis protocol",
+     "Study 1, same features: legacy thesis protocol"),
+    ("study1_jaffe.json", "distances 2D | logreg | subject-wise 10-fold",
+     "Study 1, same features: split by subject (leave-one-subject-out)"),
+    ("simulated_imbalance_study.json", "logreg / baseline",
+     "Study 2, one class near 92%: logistic regression, no fix"),
+    ("simulated_imbalance_study.json", "linear_svc / class_weight",
+     "Study 2: linear SVM with class weights"),
+    ("study3_ferplus.json", "ONNX FP32",
+     "Study 3, FER2013 PrivateTest: published ONNX FP32 model (optimistic: no subject IDs)"),
+    ("study3_ferplus.json", "ONNX INT8",
+     "Study 3: ONNX INT8 (measured failure, not published)"),
+    ("study3_ood_jaffe.json", "restricted to 7 shared classes",
+     "Study 3 model on JAFFE, not seen in training (7 shared classes)"),
+]
+
+
+def headline_rows(results_dir: Path) -> list[str]:
+    cache: dict[str, dict] = {}
+    out = []
+    for fname, row_name, text in HEADLINE:
+        p = results_dir / fname
+        if not p.exists():
+            continue
+        if fname not in cache:
+            cache[fname] = json.loads(p.read_text(encoding="utf-8"))
+        rec = cache[fname]
+        rows = {r["name"]: r for r in rec.get("metrics", {}).get("table", [])}
+        if row_name not in rows:
+            raise KeyError(f"{fname} has no row named {row_name!r}; update HEADLINE")
+        r = rows[row_name]
+        out.append(f"| {text} | {fmt(r, 'accuracy')} | {fmt(r, 'macro_f1')} | {rec['label']} |")
+    return out
+
+
+def build_headline(results_dir: Path) -> str:
+    what, acc, f1, label = REPORTED[0]
+    lines = ["| Result | Accuracy | Macro F1 | Label |", "|---|---|---|---|",
+             f"| Thesis, CK+, random frame split, test set also used for selection | {acc} "
+             f"| {f1} | {label} |"]
+    lines += headline_rows(results_dir)
+    lat = results_dir / "study3_browser_latency.json"
+    extra_lines = []
+    if lat.exists():
+        b = json.loads(lat.read_text(encoding="utf-8"))["metrics"]["extra"]["latency_browser"]
+        extra_lines.append(f"Browser latency of the published model: median {b['median_ms']:g} ms "
+                           f"over {b['n_runs']} runs, {b['browser']}, {b['device']}, {b['date']} "
+                           f"(measured (browser)).")
+    missing = [desc for fname, desc in EXPECTED.items() if not (results_dir / fname).exists()]
+    if missing:
+        extra_lines.append("Not measured yet: " + "; ".join(missing) + ".")
+    if extra_lines:
+        lines += [""] + extra_lines
+    return "\n".join(lines)
+
+
+TARGETS = {"docs/results.md": build, "README.md": build_headline}
+
+
 def replace_block(text: str, table: str) -> str:
     if START not in text or END not in text:
-        raise ValueError(f"markers {START} / {END} not found in README.md")
+        raise ValueError(f"markers {START} / {END} not found")
     head, rest = text.split(START, 1)
     _, tail = rest.split(END, 1)
     return f"{head}{START}\n{table}\n{END}{tail}"
@@ -111,17 +176,23 @@ def main(argv: list[str]) -> int:
                                  formatter_class=argparse.RawTextHelpFormatter)
     ap.add_argument("--check", action="store_true")
     ap.parse_args(argv)
-    readme = ROOT / "README.md"
-    old = readme.read_text(encoding="utf-8")
-    new = replace_block(old, build(ROOT / "results"))
-    if "--check" in argv:
+    stale = []
+    for rel, builder in TARGETS.items():
+        path = ROOT / rel
+        old = path.read_text(encoding="utf-8")
+        new = replace_block(old, builder(ROOT / "results"))
         if new != old:
-            print("README results table is out of date. Run: python scripts/make_results_table.py")
+            stale.append(rel)
+            if "--check" not in argv:
+                path.write_text(new, encoding="utf-8")
+    if "--check" in argv:
+        if stale:
+            print("results tables out of date: " + ", ".join(stale)
+                  + ". Run: python scripts/make_results_table.py")
             return 1
         print("results table up to date")
         return 0
-    readme.write_text(new, encoding="utf-8")
-    print("results table written")
+    print("results tables written" if stale else "results tables already up to date")
     return 0
 
 

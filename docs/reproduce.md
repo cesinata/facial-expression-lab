@@ -58,7 +58,7 @@ python scripts/study3.py ood --npz data/cache/uib.npz --dataset uibvfedplus_ligh
 1. Check the licence notes in `docs/release_notes.md` (pretrained weights, FER+ labels, FER2013 terms).
 2. Create a GitHub release and attach the ONNX file named `model.onnx`.
 3. The Pages workflow copies it into the demo on the next run of the workflow.
-4. Measure browser latency on a real device, add the result file with the label "measured (browser)", and only then put a number in the README.
+4. Measure browser latency on a real device, add the result file with the label "measured (browser)", with `scripts/record_browser_latency.py`, then run `python scripts/make_results_table.py`.
 
 ## Before every commit
 ```bash
