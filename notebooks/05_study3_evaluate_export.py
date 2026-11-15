@@ -58,4 +58,4 @@ FER_CSV, FERPLUS_CSV = P["fer_csv"], P["ferplus_csv"]
 
 # %% [markdown]
 # Download `study3_ferplus.json` (and `study3_ood_jaffe.json`) from `{DRIVE}/out`, put them in the
-# repo's `results/` folder, and download `model.onnx` for the release. Then follow `COMMIT_PLAN.md`.
+# repo's `results/` folder, and download `model.onnx` for the release. Then follow step 5 of `docs/reproduce.md`.

@@ -1,18 +1,40 @@
 # facial-expression-lab
 
-Three small studies on facial expression recognition, built around one question: how much of a headline accuracy survives a proper evaluation?
+Three small facial expression studies, a browser emoji demo (emoji mirror), and a corrected evaluation of my bachelor thesis results.
 
-**Status.** Code, tests, notebooks and a browser demo are written. A number appears in the results table only after I run the notebooks and commit the JSON files in `results/`. Rows that say "not measured" have not been run yet.
+## Why this repo exists
+
+It is 2026 and I am refreshing my computer vision skills. I combined my bachelor thesis project with a modern small-model study and a browser demo (emoji mirror) to practise evaluation, deployment and honest reporting end to end.
+
+## What my bachelor thesis did
+
+The thesis classified facial expressions on CK+ using MediaPipe landmark-distance features, mutual-information feature selection and a custom PyTorch CNN. It compared about 30 feature sets and found 2D distance features more informative than 3D ones, especially around the mouth, cheeks and chin. Reported accuracy rose from 86.5% to 91.95% after tuning (reported (thesis)).
+
+The split was random at frame level, so frames from the same person could be in both training and test data. The 91.95% figure is therefore not a subject-independent result. The corrected protocol is in [`docs/evaluation.md`](docs/evaluation.md), and the corrected numbers on the same kind of features are in the results table below.
 
 ## What this repo contains
 
-| Study | Question | Data | Notebook |
-|---|---|---|---|
-| 1. Landmark pipeline (from my 2023 thesis) | Do MediaPipe distance features, Mutual Information selection and a small classifier hold up under a subject-wise split? | UIBVFEDPlus-Light (public). CK+ and KDEF give numbers only. | `notebooks/03_study1_landmarks` |
-| 2. Class imbalance (from my 2022 research placement) | How far does accuracy mislead when one class is about 92% of the rows, and what changes it? | Simulated data. The real data is not public. | `notebooks/02_study2_class_imbalance` |
-| 3. A deployable recogniser | A small pretrained image model on FER2013 with FER+ labels, tested out of distribution, exported to ONNX, running in the browser. | FER2013 and FER+ labels. JAFFE if you supply it. | `notebooks/04_*`, `05_*` |
+| Study | Question | Data | Notebook | Status |
+|---|---|---|---|---|
+| 1. Landmark pipeline (from my 2023 thesis) | Do MediaPipe distance features, Mutual Information selection and a small classifier hold up under a subject-wise split? | JAFFE (you supply it). UIBVFEDPlus-Light (public). CK+ and KDEF give numbers only. | `notebooks/03_study1_landmarks.ipynb` | Partly done: JAFFE done. UIBVFEDPlus-Light, CK+ (no emotion labels) and KDEF (no images) blocked. |
+| 2. Class imbalance (from my 2022 research placement) | How far does accuracy mislead when one class is about 92% of the rows, and what changes it? | Simulated data. The real data is not public. | `notebooks/02_study2_class_imbalance.ipynb` | Done (simulated) |
+| 3. A deployable recogniser, including the emoji demo | A small pretrained image model on FER2013 with FER+ labels, tested out of distribution, exported to ONNX, running in the browser as an emoji mirror. | FER2013 and FER+ labels. JAFFE and UIBVFEDPlus-Light for out-of-distribution tests. | `notebooks/04_*`, `05_*` | Partly done: FER2013 with FER+ labels and JAFFE out-of-distribution done. UIBVFEDPlus-Light out-of-distribution blocked. Demo written, not deployed. |
 
-Also: `notebooks/01_evaluation_leakage_demo` shows, on simulated data, how a random split of frames and selecting features on all rows change results.
+Also: `notebooks/01_evaluation_leakage_demo.ipynb` shows, on simulated data, how a random split of frames and selecting features on all rows change results.
+
+## Status and to-do
+
+| State | Item |
+|---|---|
+| Done | Study 2 and the leakage demos (simulated). Study 1 on JAFFE, leave-one-subject-out (measured (local machine)). Study 3 on FER2013 with FER+ labels, ONNX export and JAFFE out-of-distribution test (measured (host CPU)). Model card. CI. |
+| Done | Kaggle FER2013 terms: terms read; they do not address publishing trained weights (owner decision recorded in [`docs/decisions.md`](docs/decisions.md)). |
+| In progress | Final documentation pass and deploy readiness. |
+| Blocked | UIBVFEDPlus-Light: the download is 33.7 GB and my local storage is low, so I will run it when I have space. Its rows stay "not measured". |
+| Blocked | CK+: my copy has the images but not the provider emotion labels. |
+| Blocked | KDEF: the actor folders in my copy are empty. |
+| To do | Deploy the demo: enable GitHub Pages and create a release with `model.onnx`. |
+| To do | Browser latency (not measured). |
+| To do | Verify the CDN versions in the demo and the GitHub Actions versions in the workflows. |
 
 ## Results
 
@@ -87,14 +109,14 @@ The first two rows are old numbers kept for comparison. `docs/evaluation.md` exp
 
 ## Datasets
 
-Several well-known facial-expression datasets cannot be shared or used freely. They need a request to the authors, limit use to non-commercial research, or restrict publishing the faces. This repository therefore **does not redistribute any dataset**. Every notebook anyone can run uses only the open datasets marked "Used here" or "Planned". Results on restricted datasets appear as numbers and charts only, and the code expects you to obtain that data yourself.
+Several well-known facial-expression datasets cannot be shared or used freely. They need a request to the authors, limit use to non-commercial research, or restrict publishing the faces. This repository therefore **does not redistribute any dataset** and does not release one; it only links to the providers. Code downloads only datasets marked "downloaded at run time". JAFFE, CK+ and KDEF you obtain yourself. Results on restricted datasets appear as numbers only.
 
 <!-- datasets:start -->
 | Dataset | What it is | Access and terms | Licence status | In this repo |
 |---|---|---|---|---|
-| FER2013 | 35,887 grayscale 48x48 web images, 7 emotions, no subject IDs. | Kaggle competition data. A Kaggle account is needed and the competition rules must be accepted before download. [Provider page](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge). | unconfirmed | Planned (downloaded at run time) |
-| FER+ labels | New labels for FER2013 from 10 annotators per image (label file only, no images). | Public GitHub repository (archived 13 June 2024) with a LICENSE.md file. [Provider page](https://github.com/microsoft/FERPlus). | confirmed | Planned (downloaded at run time) |
-| JAFFE | 213 images, 10 posers, 7 expressions. | Zenodo record 14974867. Non-commercial scientific research only. Redistribution is not permitted (including via GitHub, Kaggle and Colab). Images must not be posted on the web. [Provider page](https://zenodo.org/records/14974867). | confirmed | Planned (you download it yourself) |
+| FER2013 | 35,887 grayscale 48x48 web images, 7 emotions, no subject IDs. | Kaggle competition data. A Kaggle account is needed and the competition rules must be accepted before download. [Provider page](https://www.kaggle.com/competitions/challenges-in-representation-learning-facial-expression-recognition-challenge/data). | partly confirmed | Used here (downloaded at run time) |
+| FER+ labels | New labels for FER2013 from 10 annotators per image (label file only, no images). | Public GitHub repository (archived 13 June 2024) with a LICENSE.md file. [Provider page](https://github.com/microsoft/FERPlus). | confirmed | Used here (downloaded at run time) |
+| JAFFE | 213 images, 10 posers, 7 expressions. | Zenodo record 14974867. Non-commercial scientific research only. Redistribution is not permitted (including via GitHub, Kaggle and Colab). Images must not be posted on the web. [Provider page](https://zenodo.org/records/14974867). | confirmed | Used here (you download it yourself) |
 | UIBVFEDPlus-Light | 3,300 PNG images (1080x1920) of 100 virtual characters under 4 lighting setups, six emotion labels. | Download from the University of the Balearic Islands project page (33.7 GB). [Provider page](https://ugivia.uib.es/?p=1545). | partly confirmed | Planned (downloaded at run time) |
 | CK+ (Extended Cohn-Kanade) | 593 video sequences, 123 subjects, lab-posed expressions. | Request from the authors. Non-commercial. A consent form limits publishing faces. [Provider page](https://www.jeffcohn.net/resources/). | partly confirmed | Private results only (planned) |
 | KDEF | 4,900 pictures, 70 actors, 7 expressions, 5 angles (figures from the project brief; not checked). | Non-commercial research use. Request through the provider. [add provider link] | unconfirmed | Private results only (planned) |
@@ -103,10 +125,18 @@ Several well-known facial-expression datasets cannot be shared or used freely. T
 | RAF-DB | Large in-the-wild expression dataset. | Request to the authors, research use. [add provider link] | unconfirmed | Not used |
 | AFEW | Film clips with expression labels. | Academic, non-commercial licence; no redistribution. [add provider link] | unconfirmed | Not used |
 
-Licence information last checked: 2026-11-14. Entries marked unconfirmed have not been read on the provider's page.
+Licence information last checked: 2026-11-15. Entries marked unconfirmed have not been read on the provider's page.
 <!-- datasets:end -->
 
 The table is generated from `datasets.yaml` by `scripts/make_dataset_table.py`. Terms can change, so read each provider's page before using a dataset. To reproduce the private-data results, request CK+ or KDEF from the providers and follow `docs/data.md` for the expected folder layout.
+
+### Data attribution
+
+- FER2013 data: Kaggle, "Challenges in Representation Learning: Facial Expression Recognition Challenge", https://www.kaggle.com/competitions/challenges-in-representation-learning-facial-expression-recognition-challenge/data. Dataset prepared by Pierre-Luc Carrier and Aaron Courville.
+- FER2013 paper: Goodfellow et al. (2013), "Challenges in Representation Learning: A report on three machine learning contests", https://arxiv.org/abs/1307.0414, DOI https://doi.org/10.48550/arXiv.1307.0414.
+- FER+ labels: https://github.com/microsoft/FERPlus (MIT, per the repository's LICENSE.md).
+
+The Kaggle terms for FER2013 do not say whether models trained on the data may be published. Publishing the trained model is my own decision, recorded in [`docs/decisions.md`](docs/decisions.md).
 
 ## Run it
 
@@ -124,7 +154,7 @@ For the real-data studies, follow `docs/reproduce.md`.
 
 ## Demo
 
-Not published yet. When it is, the link goes here, with the measured browser latency and the model file's name. See `demo/README.md`.
+Written but not deployed yet: GitHub Pages is not enabled and no release with `model.onnx` exists. Browser latency is not measured. See `demo/README.md`.
 
 ## Evaluation rules used here
 
@@ -135,7 +165,7 @@ Not published yet. When it is, the link goes here, with the measured browser lat
 
 ## How AI was used and verified
 
-I used Claude (chat) for drafting code, suggesting tests and writing docs. I wrote the goal and the acceptance check first, read every change, ran the tests and made every commit myself. Every number in this repo comes from a run I did, and each one is labelled as measured, estimated or simulated.
+I used Claude (chat, and Claude Code as a coding agent) for drafting code, suggesting tests and writing docs. I wrote the goal and the acceptance check first, read every change, ran the tests and made every commit myself. Every new number in this repo comes from a run I did and is labelled measured or simulated. Older numbers from my thesis and research report are labelled reported.
 
 What I checked: tests and CI, linting, dataset licences against the provider pages, and that no images, archives or private data are in the history. Where the tool was wrong, and what I changed, is in [`docs/ai-log.md`](docs/ai-log.md).
 
