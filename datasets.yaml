@@ -25,15 +25,15 @@ datasets:
     title: FER2013
     what: "35,887 grayscale 48x48 web images, 7 emotions, no subject IDs."
     access: "Kaggle competition data. A Kaggle account is needed and the competition rules must be accepted before download."
-    licence: "unconfirmed"
-    licence_status: unconfirmed
-    source_url: "https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge"
+    licence: "Subject to Competition Rules (Kaggle Data tab)"
+    licence_status: partly_confirmed
+    source_url: "https://www.kaggle.com/competitions/challenges-in-representation-learning-facial-expression-recognition-challenge/data"
     public: true
     fetch: runtime
     role: used
-    status: planned
-    last_checked: null
-    notes: "Terms not read yet. Use the official competition file (fer2013.csv inside fer2013.tar.gz). Image-folder mirrors do not carry the row numbers or Usage split that FER+ labels need, and their terms are unconfirmed. Images are web-scraped photos of real people, so keep them out of the repo and README."
+    status: done
+    last_checked: 2026-11-15
+    notes: "Terms read by the repo owner on 2026-11-15. The Data tab lists the licence as Subject to Competition Rules. The rules forbid private sharing of code or data outside teams and require additional training data to be publicly available. They do not say whether models trained on the data may be published; publishing the trained model is an owner decision recorded in docs/decisions.md, not a confirmed permission. The dataset is never committed or released; the repo only links to it. Attribution: data from Kaggle, Challenges in Representation Learning: Facial Expression Recognition Challenge, prepared by Pierre-Luc Carrier and Aaron Courville. Paper: Goodfellow et al. (2013), Challenges in Representation Learning: A report on three machine learning contests, https://arxiv.org/abs/1307.0414, DOI https://doi.org/10.48550/arXiv.1307.0414. Use the official competition file (fer2013.csv inside fer2013.tar.gz). Image-folder mirrors do not carry the row numbers or Usage split that FER+ labels need, and their terms are unconfirmed. Images are web-scraped photos of real people, so keep them out of the repo and README."
 
   - name: ferplus
     title: FER+ labels
@@ -45,7 +45,7 @@ datasets:
     public: true
     fetch: runtime
     role: used
-    status: planned
+    status: done
     last_checked: 2026-11-14
     notes: "LICENSE.md from the repository download was read on 2026-11-14: MIT. It covers the FER+ repository contents. The FER2013 images are separate and keep the Kaggle terms."
 
@@ -59,7 +59,7 @@ datasets:
     public: true
     fetch: user_supplied
     role: used
-    status: planned
+    status: done
     last_checked: 2026-11-08
     notes: "Evaluation only: numbers from cross-validation or out-of-distribution tests are fine. You download it yourself. No JAFFE images in the repo, README or demo, and no trained model files built from it are published. Cite the two articles named in the provider README."
 

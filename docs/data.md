@@ -5,9 +5,9 @@ Terms for every dataset are stored once in `datasets.yaml`. The table below is g
 <!-- datasets:start -->
 | Dataset | What it is | Access and terms | Licence status | In this repo |
 |---|---|---|---|---|
-| FER2013 | 35,887 grayscale 48x48 web images, 7 emotions, no subject IDs. | Kaggle competition data. A Kaggle account is needed and the competition rules must be accepted before download. [Provider page](https://www.kaggle.com/c/challenges-in-representation-learning-facial-expression-recognition-challenge). | unconfirmed | Planned (downloaded at run time) |
-| FER+ labels | New labels for FER2013 from 10 annotators per image (label file only, no images). | Public GitHub repository (archived 13 June 2024) with a LICENSE.md file. [Provider page](https://github.com/microsoft/FERPlus). | confirmed | Planned (downloaded at run time) |
-| JAFFE | 213 images, 10 posers, 7 expressions. | Zenodo record 14974867. Non-commercial scientific research only. Redistribution is not permitted (including via GitHub, Kaggle and Colab). Images must not be posted on the web. [Provider page](https://zenodo.org/records/14974867). | confirmed | Planned (you download it yourself) |
+| FER2013 | 35,887 grayscale 48x48 web images, 7 emotions, no subject IDs. | Kaggle competition data. A Kaggle account is needed and the competition rules must be accepted before download. [Provider page](https://www.kaggle.com/competitions/challenges-in-representation-learning-facial-expression-recognition-challenge/data). | partly confirmed | Used here (downloaded at run time) |
+| FER+ labels | New labels for FER2013 from 10 annotators per image (label file only, no images). | Public GitHub repository (archived 13 June 2024) with a LICENSE.md file. [Provider page](https://github.com/microsoft/FERPlus). | confirmed | Used here (downloaded at run time) |
+| JAFFE | 213 images, 10 posers, 7 expressions. | Zenodo record 14974867. Non-commercial scientific research only. Redistribution is not permitted (including via GitHub, Kaggle and Colab). Images must not be posted on the web. [Provider page](https://zenodo.org/records/14974867). | confirmed | Used here (you download it yourself) |
 | UIBVFEDPlus-Light | 3,300 PNG images (1080x1920) of 100 virtual characters under 4 lighting setups, six emotion labels. | Download from the University of the Balearic Islands project page (33.7 GB). [Provider page](https://ugivia.uib.es/?p=1545). | partly confirmed | Planned (downloaded at run time) |
 | CK+ (Extended Cohn-Kanade) | 593 video sequences, 123 subjects, lab-posed expressions. | Request from the authors. Non-commercial. A consent form limits publishing faces. [Provider page](https://www.jeffcohn.net/resources/). | partly confirmed | Private results only (planned) |
 | KDEF | 4,900 pictures, 70 actors, 7 expressions, 5 angles (figures from the project brief; not checked). | Non-commercial research use. Request through the provider. [add provider link] | unconfirmed | Private results only (planned) |
@@ -16,7 +16,7 @@ Terms for every dataset are stored once in `datasets.yaml`. The table below is g
 | RAF-DB | Large in-the-wild expression dataset. | Request to the authors, research use. [add provider link] | unconfirmed | Not used |
 | AFEW | Film clips with expression labels. | Academic, non-commercial licence; no redistribution. [add provider link] | unconfirmed | Not used |
 
-Licence information last checked: 2026-11-14. Entries marked unconfirmed have not been read on the provider's page.
+Licence information last checked: 2026-11-15. Entries marked unconfirmed have not been read on the provider's page.
 <!-- datasets:end -->
 
 ## Rules
@@ -38,5 +38,6 @@ KDEF: any folder tree holding the original files. Names like `AF01HAS.JPG` are p
 
 - JAFFE: the provider's page limits use to non-commercial scientific research and forbids redistribution, including via Colab. This repo never downloads it and never shows its images.
 - UIBVFEDPlus-Light: CC BY 4.0 on the project page and the university repository record (read 2026-11-08). Confirm on the figshare record before release.
-- FER+ and FER2013: licence text not read yet. Not confirmed.
-- CK+ labels: Phase 2 uses only sequences that carry provider labels and reports any hand-labelled sequences separately.
+- FER+: MIT, read in the repository's LICENSE.md on 2026-11-14.
+- FER2013: Kaggle terms read on 2026-11-15. The Data tab lists the licence as "Subject to Competition Rules". The rules do not address publishing models trained on the data; publishing the model is an owner decision (`docs/decisions.md`). The dataset is never committed or released.
+- CK+ labels: only sequences that carry provider labels are used, and any hand-labelled sequences are reported separately. The local copy has no provider emotion files yet, so no CK+ run exists.
