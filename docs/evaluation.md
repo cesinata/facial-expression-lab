@@ -27,4 +27,4 @@ Facts read from the thesis notebooks on 2026-11-08 (CK+, 8 classes, 348 test row
 These are reported as "reported (thesis)" and are not reused as results.
 
 ## Where old and corrected numbers appear
-The README table lists the thesis result with the label "reported (thesis)". The corrected result for the same pipeline comes from `scripts/run_study1.py`, which also reports the random-row and legacy protocols on the same features. For CK+ and KDEF the corrected numbers come from a run on the owner's machine and appear in `results/private/` as numbers only.
+The README table lists the thesis result with the label "reported (thesis)". The corrected result for the same kind of pipeline comes from `scripts/run_study1.py`, which also reports the random-row and legacy protocols on the same features. So far it has been run on JAFFE (`results/study1_jaffe.json`, measured (local machine)). CK+ and KDEF runs are blocked (no provider emotion labels and no images in the local copies), so `results/private/` holds no result files yet; when they run, they will write numbers only.

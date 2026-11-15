@@ -15,13 +15,13 @@
 - Head rotation is not corrected. Distances use the image plane and the mesh depth estimate as given.
 
 ## Protocols reported side by side
-For every model and feature set the study reports the subject-wise result, a random-row 5-fold result and the legacy thesis protocol (selection on all rows, random 70/15/15 split), on the same features. The gap between them is the point of the study.
+For every model and feature set the study reports the subject-wise result, a random-row result with the same number of folds and the legacy thesis protocol (selection on all rows, random 70/15/15 split), on the same features. The gap between them is the point of the study.
 
 ## CK+ and KDEF (private)
 Run on your own machine with `scripts/extract_features.py` and `scripts/run_study1.py`. Only sequences with a provider emotion label are used for CK+. Any hand-labelled sequences must be reported as a separate run. KDEF is split by actor, with the same actor's two sessions kept together. Only numbers are committed.
 
 ## JAFFE (you supply it)
-JAFFE has 213 images of 10 people, so a 10-fold subject-wise split is leave-one-subject-out. Run `scripts/extract_features.py --source jaffe` and `scripts/run_study1.py --dataset jaffe --splits 10`. Only numbers are published. Results from 10 people are noisy, so read the bootstrap interval, not just the mean.
+JAFFE has 213 images of 10 people, so a 10-fold subject-wise split is leave-one-subject-out. Run `scripts/extract_features.py --source jaffe` and `scripts/run_study1.py --dataset jaffe --splits 10`. Only numbers are published. Results from 10 people are noisy, so read the interval over subjects (`macro_f1_ci95_over_subjects` in `results/study1_jaffe.json`), not just the mean. The JAFFE results are in the README results table (measured (local machine)).
 
 ## Known limits
 - UIBVFEDPlus-Light is rendered avatars, not photos of people. Results do not transfer to real faces by default.

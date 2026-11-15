@@ -25,7 +25,7 @@ drive.mount("/content/drive")
 
 # %% [markdown]
 # ## Unpack both zips and find the files
-# The script prints the FER+ licence file. Read it, and tell me what it says.
+# The script prints the FER+ licence file. Read it. It was read on 2026-11-14: MIT (see `datasets.yaml`).
 
 # %% [markdown]
 # ## What is in my Drive folder and in each zip?
