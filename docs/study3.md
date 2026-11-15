@@ -17,3 +17,8 @@ Face crops from UIBVFEDPlus-Light (and JAFFE, if you supply it) are classified w
 
 ## Export and speed
 PyTorch FP32, ONNX FP32 and, if onnxruntime can quantise it, ONNX INT8 are each evaluated on PrivateTest. The script also records the largest difference between PyTorch and ONNX logits, file sizes, and single-sample latency on the machine that ran it. Latency from one machine says little about another. Evaluation and latency run on the CPU of whatever machine runs `evaluate` (in Colab, its virtual machine), so the label is "measured (host CPU)". Training is the only GPU step. INT8 may not be faster or smaller for convolution-heavy models, and the browser runtime may not support every INT8 operator, so the browser demo should use the FP32 file unless INT8 has been run there.
+
+## What was measured
+The numbers are in `docs/model_card.md` and `results/study3_ferplus.json`. Two outcomes shape how the model is used:
+- ONNX INT8 failed. Dynamic quantisation took PrivateTest accuracy from 0.705 to 0.047 and was slower on this CPU (median 11.42 ms against 1.27 ms for FP32), so `model_int8.onnx` is not published and the demo uses the FP32 file.
+- On JAFFE, which was not trained on, the model scores far below its in-distribution result. FER2013 numbers do not transfer to other face data.
