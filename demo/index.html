@@ -22,6 +22,7 @@
   .center { text-align: center; }
   footer { margin-top: 2rem; border-top: 1px solid var(--track); padding-top: .75rem; }
   a { color: var(--bar); }
+  pre { white-space: pre-wrap; word-break: break-word; font-size: .8rem; }
 </style>
 </head>
 <body>
@@ -45,6 +46,10 @@ Read the model card and the evaluation notes in the repository before drawing co
 <div id="bars"></div>
 <p class="muted">Median model time over the last 30 frames (measured in this browser, this device):
 <span id="latency">n/a</span></p>
+<p class="muted"><button id="bench" disabled>Measure model time</button> Runs the model 200 times on the
+current face crop (after 20 warm-up runs), one call at a time, and prints the numbers and a command
+for recording them in the repository.</p>
+<pre id="benchout" class="muted" hidden></pre>
 <p class="muted warn" id="notice"></p>
 
 <h2>About the model</h2>
@@ -61,7 +66,6 @@ the model was not trained on, accuracy was 0.380 (measured (host CPU), <code>res
   <a href="https://github.com/cesinata/facial-expression-lab/blob/main/docs/model_card.md">Model card</a> ·
   <a href="https://github.com/cesinata/facial-expression-lab/blob/main/docs/learning.md">Computer vision refresher map</a><br>
   This page: <a href="https://cesinata.github.io/facial-expression-lab/">cesinata.github.io/facial-expression-lab</a>
-  (live after Pages is enabled)
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.31.1/dist/ort.min.js"></script>

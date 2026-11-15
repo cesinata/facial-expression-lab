@@ -2,7 +2,7 @@
 
 Three small facial expression studies, a browser emoji demo (emoji mirror), and a corrected evaluation of my bachelor thesis results.
 
-Live demo: https://cesinata.github.io/facial-expression-lab/ (live after Pages is enabled). Learning notes: [computer vision refresher map](docs/learning.md).
+Live demo: https://cesinata.github.io/facial-expression-lab/. Learning notes: [computer vision refresher map](docs/learning.md).
 
 ## Why this repo exists
 
@@ -20,7 +20,7 @@ The split was random at frame level, so frames from the same person could be in 
 |---|---|---|---|---|
 | 1. Landmark pipeline (from my 2023 thesis) | Do MediaPipe distance features, Mutual Information selection and a small classifier hold up under a subject-wise split? | JAFFE (you supply it). UIBVFEDPlus-Light (public). CK+ and KDEF give numbers only. | `notebooks/03_study1_landmarks.ipynb` | Partly done: JAFFE done. UIBVFEDPlus-Light, CK+ (no emotion labels) and KDEF (no images) blocked. |
 | 2. Class imbalance (from my 2022 research placement) | How far does accuracy mislead when one class is about 92% of the rows, and what changes it? | Simulated data. The real data is not public. | `notebooks/02_study2_class_imbalance.ipynb` | Done (simulated) |
-| 3. A deployable recogniser, including the emoji demo | A small pretrained image model on FER2013 with FER+ labels, tested out of distribution, exported to ONNX, running in the browser as an emoji mirror. | FER2013 and FER+ labels. JAFFE and UIBVFEDPlus-Light for out-of-distribution tests. | `notebooks/04_*`, `05_*` | Partly done: FER2013 with FER+ labels and JAFFE out-of-distribution done. UIBVFEDPlus-Light out-of-distribution blocked. Demo written, not deployed. |
+| 3. A deployable recogniser, including the emoji demo | A small pretrained image model on FER2013 with FER+ labels, tested out of distribution, exported to ONNX, running in the browser as an emoji mirror. | FER2013 and FER+ labels. JAFFE and UIBVFEDPlus-Light for out-of-distribution tests. | `notebooks/04_*`, `05_*` | Partly done: FER2013 with FER+ labels and JAFFE out-of-distribution done. UIBVFEDPlus-Light out-of-distribution blocked. Demo live on GitHub Pages. |
 
 Also: `notebooks/01_evaluation_leakage_demo.ipynb` shows, on simulated data, how a random split of frames and selecting features on all rows change results.
 
@@ -30,14 +30,14 @@ Also: `notebooks/01_evaluation_leakage_demo.ipynb` shows, on simulated data, how
 |---|---|
 | Done | Study 2 and the leakage demos (simulated). Study 1 on JAFFE, leave-one-subject-out (measured (local machine)). Study 3 on FER2013 with FER+ labels, ONNX export and JAFFE out-of-distribution test (measured (host CPU)). Model card. CI. |
 | Done | Kaggle FER2013 terms: terms read; they do not address publishing trained weights (owner decision recorded in [`docs/decisions.md`](docs/decisions.md)). |
-| In progress | Final documentation pass and deploy readiness. |
+| Done | Demo deployed on GitHub Pages with `model.onnx` from release v1.0.0 (2026-11-15). It loaded and ran in Chrome on a MacBook with onnxruntime-web 1.31.1 and @mediapipe/tasks-vision 1.2.0. |
+| Done | Browser latency: one reading, median 3.2 ms over 30 frames, Chrome on a MacBook, 2026-11-15 (measured (browser)). |
+| In progress | AI log review: the entries in [`docs/ai-log.md`](docs/ai-log.md) marked DRAFT still need my check. |
 | Blocked | UIBVFEDPlus-Light: the download is 33.7 GB and my local storage is low, so I will run it when I have space. Its rows stay "not measured". |
 | Blocked | CK+: my copy has the images but not the provider emotion labels. |
 | Blocked | KDEF: the actor folders in my copy are empty. |
-| To do | Deploy the demo: enable GitHub Pages and create a release with `model.onnx`. |
-| To do | Browser latency (not measured). |
 | Done | CDN versions in the demo and GitHub Actions versions in the workflows checked and updated on 2026-11-15 (see [`docs/decisions.md`](docs/decisions.md)). |
-| To do | Check that the demo loads with the new CDN versions once it is deployed (not yet run in a browser). |
+| To do | Try the demo in other browsers and on a phone (not checked), and record a 200-run browser benchmark with the "Measure model time" button (95th percentile not recorded yet). |
 
 ## Results
 
@@ -73,6 +73,7 @@ Every row comes from a file in `results/` or is an old number with its own label
 | study3: ONNX INT8 | ferplus | 0.047 | 0.037 | measured (host CPU) |
 | Study 3: out-of-distribution, UIBVFEDPlus-Light | n/a | not measured | not measured | not measured |
 | study3 out-of-distribution: restricted to 7 shared classes | jaffe | 0.380 | 0.314 | measured (host CPU) |
+| study3_browser_latency: ONNX FP32 in the browser, median 3.2 ms over 30 runs, Chrome (version not recorded), MacBook (macOS), 2026-11-15 | ferplus | n/a | n/a | measured (browser) |
 | Study 1: CK+ (private data, numbers only) | n/a | not measured | not measured | not measured |
 | Study 1: KDEF (private data, numbers only) | n/a | not measured | not measured | not measured |
 | study1_jaffe: distances 2D | majority | subject-wise 10-fold | jaffe | 0.145 ± 0.011 | 0.036 ± 0.002 | measured (local machine) |
@@ -106,6 +107,7 @@ Every row comes from a file in `results/` or is an old number with its own label
 
 Note: Study 3 uses FER2013, which has no subject IDs, so the same person can be in several splits and its numbers are optimistic.
 Note: The ONNX INT8 row is a measured failure: dynamic quantisation damaged the model, so it is not published and the demo uses the FP32 file.
+Note: The browser latency row has no accuracy: it is the model time in the demo page, median 3.2 ms over 30 runs, Chrome (version not recorded), MacBook (macOS), 2026-11-15 (measured (browser)).
 <!-- results:end -->
 
 The first two rows are old numbers kept for comparison. `docs/evaluation.md` explains why the thesis number should not be read as a held-out result.
@@ -157,9 +159,13 @@ For the real-data studies, follow `docs/reproduce.md`.
 
 ## Demo
 
-Live page: https://cesinata.github.io/facial-expression-lab/ (live after Pages is enabled). It is not deployed yet: GitHub Pages is not enabled and no release with `model.onnx` exists.
+Live page: **https://cesinata.github.io/facial-expression-lab/**
 
-The page runs the FP32 `model.onnx` (6.12 MB) from the GitHub release; the INT8 file failed its test and is not published. The weakest classes on FER2013 PrivateTest are contempt, fear and neutral (recall 0.481, 0.516 and 0.599, measured (host CPU)). Browser latency is not measured. See [`demo/README.md`](demo/README.md), [`docs/release_notes.md`](docs/release_notes.md) and the [computer vision refresher map](docs/learning.md).
+<img src="https://github.com/cesinata/facial-expression-lab/releases/download/v1.0.0/demo-screenshot.png" alt="Demo page in Chrome: blurred webcam frame, the emoji mirror showing a smiling face, and probability bars for the eight classes" width="420">
+
+Screenshot taken on 2026-11-15 in Chrome on a MacBook, with the webcam frame blurred. The smoothed emoji shows happiness while the bars for that single frame are close (disgust 27%, happiness 26%, contempt 25%), so the model is unsure on that frame. The percentages are not calibrated probabilities (see the model card).
+
+The page runs the FP32 `model.onnx` (6.12 MB) from GitHub release v1.0.0; the INT8 file failed its test and is not published. The weakest classes on FER2013 PrivateTest are contempt, fear and neutral (recall 0.481, 0.516 and 0.599, measured (host CPU)). Browser latency: median 3.2 ms over 30 frames, Chrome on a MacBook, 2026-11-15 (measured (browser)); one reading, so read it as a rough figure. See [`demo/README.md`](demo/README.md), [`docs/release_notes.md`](docs/release_notes.md) and the [computer vision refresher map](docs/learning.md).
 
 ## Evaluation rules used here
 

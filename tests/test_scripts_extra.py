@@ -4,6 +4,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
 from fel.results import write_result
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -99,3 +101,21 @@ def test_results_table_notes_flag_a_broken_int8_row_only_when_the_data_shows_it(
     assert any("no subject IDs" in n for n in notes)
     assert not any("INT8" in n for n in notes)
     assert "Note: " in mod.build(tmp_path)
+
+
+def test_record_browser_latency_writes_a_labelled_result(tmp_path):
+    mod = _load("record_browser_latency")
+    out = tmp_path / "lat.json"
+    assert mod.main(["--median-ms", "3.2", "--n-runs", "30", "--browser", "Chrome",
+                     "--device", "MacBook", "--date", "2026-11-15", "--method", "live loop",
+                     "--out", str(out)]) == 0
+    rec = json.loads(out.read_text())
+    assert rec["label"] == "measured (browser)"
+    lat = rec["metrics"]["extra"]["latency_browser"]
+    assert (lat["median_ms"], lat["n_runs"], lat["p95_ms"]) == (3.2, 30, None)
+    with pytest.raises(ValueError):
+        mod.build_record(3.2, 30, "Chrome", "", "2026-11-15", "live loop")
+    with pytest.raises(ValueError):
+        mod.build_record(3.2, 30, "Chrome", "MacBook", "15/11/2026", "live loop")
+    with pytest.raises(ValueError):
+        mod.build_record(3.2, 30, "Chrome", "MacBook", "2026-11-15", "live loop", p95_ms=1.0)

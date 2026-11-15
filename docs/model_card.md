@@ -2,7 +2,7 @@
 
 Last updated: 2026-11-15
 
-Every number below comes from `results/study3_ferplus.json` and `results/study3_ood_jaffe.json`, and `tests/test_model_card.py` fails if the card and those files disagree. All were run once, on the CPU of a Colab virtual machine (label: measured (host CPU)), except where a row says otherwise.
+Every number below comes from `results/study3_ferplus.json`, `results/study3_ood_jaffe.json` and `results/study3_browser_latency.json`, and `tests/test_model_card.py` fails if the card and those files disagree. All were run once, on the CPU of a Colab virtual machine (label: measured (host CPU)), except where a row says otherwise.
 
 ## Model
 
@@ -12,7 +12,7 @@ Every number below comes from `results/study3_ferplus.json` and `results/study3_
 | Training data | FER2013 Training split with FER+ majority-vote labels |
 | Training run | 40 epochs, best epoch 34 chosen by macro F1 on PublicTest (validation macro F1 0.590). An earlier 15-epoch run reached 0.515; the 40-epoch model was chosen on PublicTest, before PrivateTest was read. Both numbers are from the training notebook output, not from a result file. |
 | Pretrained weights | ImageNet weights from timm, Apache-2.0 on the timm model card. The terms of the ImageNet-1k data have not been reviewed. |
-| Published file | `model.onnx` (FP32), 6.12 MB. Not in git. It is published only as a GitHub release attachment, and that release has not been created yet. |
+| Published file | `model.onnx` (FP32), 6.12 MB. Not in git. Published only as an attachment to GitHub release v1.0.0. |
 
 ## Data and attribution
 
@@ -62,7 +62,7 @@ JAFFE has 10 subjects, so this figure is noisy. It is well above chance and far 
 
 ## Speed
 
-Single sample, one call at a time, on the Colab virtual machine's CPU (measured (host CPU)). Browser latency is a different machine and runtime and is not measured yet.
+Single sample, one call at a time, on the Colab virtual machine's CPU (measured (host CPU)). Browser latency is a different machine and runtime, so it has its own row and label.
 
 | File | Size | Median | 95th percentile |
 |---|---|---|---|
@@ -71,7 +71,7 @@ Single sample, one call at a time, on the Colab virtual machine's CPU (measured 
 
 | Field | Value |
 |---|---|
-| Browser latency | not measured |
+| Browser latency | median 3.2 ms over 30 runs, measured (browser): Chrome (version not recorded), MacBook (macOS), 2026-11-15, live demo loop, read from a screenshot of the page. 95th percentile not recorded. |
 
 ## Intended use
 Learning about evaluation of expression models. Demonstrating a small model running in a browser.

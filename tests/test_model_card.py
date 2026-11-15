@@ -74,3 +74,23 @@ def test_demo_names_the_three_weakest_classes_with_their_recall():
         for cls in weakest:
             assert f"{cls} ({recall[cls]:.3f})" in text or f"{cls} {recall[cls]:.3f}" in text, (
                 f"{doc} does not show {cls} with recall {recall[cls]:.3f}")
+
+
+BROWSER = ROOT / "results" / "study3_browser_latency.json"
+
+
+def test_model_card_browser_latency_row_matches_the_result_file():
+    row = next(line for line in CARD.splitlines() if line.startswith("| Browser latency |"))
+    if not BROWSER.exists():
+        assert "not measured" in row
+        return
+    rec = json.loads(BROWSER.read_text(encoding="utf-8"))
+    assert rec["label"] == "measured (browser)"
+    lat = rec["metrics"]["extra"]["latency_browser"]
+    for wanted in (f"median {lat['median_ms']:g} ms", f"over {lat['n_runs']} runs",
+                   "measured (browser)", lat["browser"], lat["device"], lat["date"]):
+        assert wanted in row, f"browser latency row is missing {wanted!r}"
+    if lat["p95_ms"] is None:
+        assert "95th percentile not recorded" in row
+    else:
+        assert f"{lat['p95_ms']:g} ms" in row
