@@ -13,4 +13,4 @@ Rules:
 
 ## AI log
 
-After each task, add a draft entry to `private/ai-log-drafts.md` (ignored by git) using the format at the top of `docs/ai-log.md`. Mark it `DRAFT: to be confirmed`. The owner moves reviewed entries into `docs/ai-log.md`. Record only what actually happened: what was asked, what failed on your own test or lint run, what you could not verify. Never invent a problem, a check or a result. Do not run `git commit`, `git push` or `git config`.
+After each task, add a draft entry to `private/ai-log-drafts.md` (ignored by git) using the format at the top of that file. Mark it `DRAFT: to be confirmed`. The owner moves reviewed entries into `docs/ai-log.md`. Record only what actually happened: what was asked, what failed on your own test or lint run, what you could not verify. Never invent a problem, a check or a result. Do not run `git commit`, `git push` or `git config`.
