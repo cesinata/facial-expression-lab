@@ -19,5 +19,5 @@ the README only after you measure it and commit the result (label: measured (bro
 Limits to know about:
 - The crop is resized with the browser canvas, not Pillow, so inputs differ slightly from training.
   The size of that effect has not been measured.
-- The ONNX Runtime Web wasm build may not support every INT8 operator. Publish the FP32 model unless you
-  have run the INT8 one in the browser.
+- Only the FP32 model is published. The INT8 file failed on PrivateTest (accuracy 0.047 against 0.705
+  for FP32, measured (host CPU), `results/study3_ferplus.json`), so it is not used here.

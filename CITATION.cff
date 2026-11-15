@@ -7,3 +7,23 @@ authors:
 repository-code: "https://github.com/cesinata/facial-expression-lab"
 license: MIT
 version: 0.1.0
+references:
+  - type: data
+    title: "Challenges in Representation Learning: Facial Expression Recognition Challenge"
+    authors:
+      - family-names: "Carrier"
+        given-names: "Pierre-Luc"
+      - family-names: "Courville"
+        given-names: "Aaron"
+    publisher:
+      name: "Kaggle"
+    url: "https://www.kaggle.com/competitions/challenges-in-representation-learning-facial-expression-recognition-challenge/data"
+    notes: "FER2013. Terms: Subject to Competition Rules. Not redistributed by this repository."
+  - type: article
+    title: "Challenges in Representation Learning: A report on three machine learning contests"
+    authors:
+      - family-names: "Goodfellow"
+      - name: "et al."
+    year: 2013
+    doi: "10.48550/arXiv.1307.0414"
+    url: "https://arxiv.org/abs/1307.0414"
