@@ -62,7 +62,6 @@ Notebooks are in [`notebooks/`](notebooks/). `01_evaluation_leakage_demo` shows,
 | State | Items |
 |---|---|
 | Done | Study 2 and the leakage demos (simulated). Study 1 on JAFFE. Study 3 on FER2013 with FER+ labels, ONNX export and JAFFE test. Model card. CI. Demo live on GitHub Pages with release v1.0.0. One browser latency reading. Library and Actions versions checked (2026-11-15). Kaggle FER2013 terms: terms read; they do not address publishing trained weights (owner decision recorded in [`docs/decisions.md`](docs/decisions.md)). |
-| In progress | Reviewing the AI log entries in [`docs/ai-log.md`](docs/ai-log.md) marked DRAFT. |
 | Blocked | UIBVFEDPlus-Light: 33.7 GB download and my local storage is low, so I will run it when I have space (its rows stay "not measured"). CK+: no provider emotion labels in my copy. KDEF: the actor folders in my copy are empty. |
 | To do | Try the demo in other browsers and on a phone. Record a 200-run browser benchmark with the "Measure model time" button. |
 
@@ -99,7 +98,6 @@ For the real-data studies, follow [`docs/reproduce.md`](docs/reproduce.md).
 ## More
 
 - **Evaluation rules:** split by subject where IDs exist, report macro F1 and per-class recall next to accuracy, read the test fold once, label every number. Details: [`docs/evaluation.md`](docs/evaluation.md).
-- **How AI was used:** I used Claude (chat, and Claude Code as a coding agent) for drafting code, tests and docs. I wrote the goal and the acceptance check first, read every change, ran the tests and made every commit myself. Where the tool was wrong: [`docs/ai-log.md`](docs/ai-log.md).
 - **Responsible use:** facial expression is not inner emotion, and the model is not for decisions about people. See [`docs/responsible_use.md`](docs/responsible_use.md).
 - **Decisions and defaults:** [`docs/decisions.md`](docs/decisions.md).
 - **Licence:** code under MIT (see `LICENSE`). Datasets and third-party models keep their own terms.
